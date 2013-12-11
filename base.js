@@ -1,4 +1,3 @@
-
 /*
 
 	As you can see, i'm not a javascript master
@@ -972,10 +971,12 @@ function second2name(second) {
 	}
 }
 function makekey() {
-	ironbar-=100;
-	passgate=true;
-	closemessage()
-	checkthings();
+	if(ironbar>=100) {
+		ironbar-=100;
+		passgate=true;
+		closemessage();
+		checkthings();
+	}
 }
 function learnnewskill() {
 	closemessage();
@@ -1162,7 +1163,7 @@ function showstorage() {
 }
 function changelog() {
 	closemessage();
-	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>11 December 2013:<br>- Version 1.0 Beta released!</div>",true);
+	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
 }
 function armorshop() {
 	closemessage();
