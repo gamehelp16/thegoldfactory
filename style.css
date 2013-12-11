@@ -957,3 +957,6 @@ body.wob .theportal, body.wob .thefox, body.wob .thehouse, body.wob .sand, body.
 body.wob [class^=buttons-] input[type=button]:disabled {
 	background:rgba(255,255,255,.3);
 }
+img {
+	opacity:0;
+}
