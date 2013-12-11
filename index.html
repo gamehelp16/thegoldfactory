@@ -1,1 +1,520 @@
-Coming soon 11 Dec 2013
+<!DOCTYPE HTML>
+<html lang="en-US">
+
+<!--
+	WARNING:
+	 Reading source code may spoil things in this game
+	 Read with caution!
+-->
+
+<head>
+	<meta charset="UTF-8">
+	<title>The Gold Factory</title>
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="base.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="style.css" media="all" />
+</head>
+<body>
+<div id="storage">
+	Storage:<br>
+	<div id="insidestorage">
+		<span id="gold-bar">0</span> gold bar(s)<br>
+		<span id="ib"><span id="iron-bar">0</span> iron bar(s)</span><br>
+		<a href="javascript:showstorage();">View complete storage</a>
+	</div>
+	You have eaten <span class="pizzacount">0 pizzas</span><br>
+	Current weapon: <span class="currentsword">none</span>
+</div>
+
+<div class="modal"></div>
+<div class="fader"></div>
+
+<div class="alert alert-storage">
+<b>Storage:</b><br>
+<div id="insidestorage">
+	<div id="otheritems"></div>
+</div>
+<br><br>
+<input type="button" value="Close this window" onclick="closemessage()">
+</div>
+
+<div class="alert alert-gold-factory">
+<b>The Gold Factory</b><br>
+Status: You work here, and you get 1 gold bar per second as the salary
+<br><br>
+<input type="button" value="Close this window" onclick="closemessage()">
+</div>
+
+<div class="alert alert-theshop">
+<b>The Shop</b><br>
+What do you want to buy sir?<br><br>
+<input type="button" value="A shovel" onclick="buy('shovel',1)" class="buy-shovel" disabled> (50 gold bars)<br>
+<input type="button" value="Pizza" onclick="buy('pizza',1)" class="buy-pizza" disabled> (20 gold bars)<br>
+<input type="button" value="20 Pizzas" onclick="buy('pizza',20)" class="buy-pizza-20" disabled> (400 gold bars)<br>
+<span class="wooden-sword-shop"><input type="button" value="Wooden sword" onclick="buy('wooden sword',1)" class="buy-wooden-sword" disabled> (150 gold bars)</span>
+<span class="stone-sword-shop" style="display:none;"><input type="button" value="Stone sword" onclick="buy('stone sword',1)" class="buy-stone-sword" disabled> (500 gold bars)</span>
+<span class="no-sword-upgrade" style="display:none;">Sorry, stone sword is the best sword I have</span>
+<br><br>
+<input type="button" value="Close this window" onclick="closemessage()">
+</div>
+
+<div class="alert alert-anothershop">
+<b>Another Shop</b><br>
+Hi! Welcome to my shop! :D<br><br>
+<input type="button" value="10 Iron Bars" onclick="goldbar-=100; ironbar+=10; checkthings();" class="buy-iron-bar" disabled> (100 gold bars)<br>
+<input type="button" value="100 Pizzas" onclick="buy('pizza',100)" class="buy-pizza-20" disabled> (2000 gold bars)<br>
+<input type="button" value="Health Potion" onclick="buy('health potion',1)" class="buy-health-potion"> (50 gold bars)<br>
+<span class="iron-sword-shop"><input type="button" value="Iron sword" onclick="buy('iron sword',1)" class="buy-iron-sword" disabled> (2000 gold bars, and please make sure you have a stone sword)</span>
+<span class="diamond-sword-shop" style="display:none;"><input type="button" value="Diamond sword" onclick="buy('diamond sword',1)" class="buy-diamond-sword" disabled> (5000 gold bars)</span>
+<span class="need-iron" style="display:none;">Sorry, i have no more swords</span>
+<br><br>
+<input type="button" value="Close this window" onclick="closemessage()">
+</div>
+
+<div class="alert alert-sign">
+<b>A sign</b><br>
+<i>"There is a hole here!"</i><br><br>
+<input type="button" value="Dig the hole" onclick="dighole()">
+<input type="button" value="Close this window" onclick="closemessage()">
+</div>
+
+<div class="alert alert-dig-step-1">
+<b>A hole</b><br>
+This is an "unfinished" hole<br><br>
+<input type="button" value="Continue digging" onclick="continuedigging()">
+<input type="button" value="Close this window" onclick="closemessage()">
+</div>
+
+<div id="otheralerts"></div>
+
+<div id="skyspace"></div>
+<div id="wrapper">
+<div id="sky">
+<pre class="cloud cloud-1">
+     _  _
+    ( `   )_
+   (    )    `)
+ (_   (_ .  _) _)
+</pre>
+<pre class="cloud cloud-2">
+       _
+      (  )
+   ( `  ) . )
+<span onclick="clickcloud()">  (_, _(  ,_)_)</span>
+</pre>
+<pre class="cloud cloud-3">
+    _ . 
+  (  _ )_ 
+(_  _(_ ,)
+</pre>
+<pre class="cloud cloud-4 hidden" title="Castle in the cloud">
+        p             
+       /\     p      p
+      /__\   /\_____/\
+      |. |_=_|. . . .|
+      |. |. .|  ___  |
+     _|. |___|_|___|_|_
+    ( `                )_
+   (    )        )       `)
+ (_   (_ .      (         _)
+</pre>
+</div>
+<div id="land">
+<pre id="gold-factory" class="building" title="The Gold Factory">
+          __  . .* ,
+    ~#@#%(" .,$ @
+    ."^ ';"
+   ..
+  ;. :
+  ;==:
+  ;. :
+  ;==:
+  ;. :
+  ;==:  ._______.
+  ;. :  ;    ###:__.
+_.'__`._;_______:__:
+</pre>
+<pre class="building hidden  theshop" title="The Shop">
+
+
+
+
+
+     ~
+   ~
+ _u__
+/____\
+|[][]|
+|[]..|
+|____|
+</pre>
+<pre class="building hidden  sign" title="A Sign">
+
+
+
+
+
+
+
+
+
+ __
+[__]
+_||_
+</pre>
+<pre class="building hidden  anothershop" title="Another Shop">
+
+
+
+
+    
+   
+ ____
+/____\
+|    |
+| [] |
+| __ |
+|[__]|
+</pre>
+<pre class="building hidden  gate" title="Locked Gate">
+
+
+
+
+  
+ _
+| |
+| |
+| |
+| |
+| |
+|_|
+</pre>
+<pre class="building hidden enchant" title="Enchanting Shop">
+
+
+
+
+  
+
+
+   
+ ____
+/____\
+| __ |
+|[__]|
+</pre>
+<pre class="building hidden enchant" title="Enchanting Shop">
+
+
+
+
+  
+
+
+   
+ ____
+/____\
+| __ |
+|[__]|
+</pre>
+<pre class="building hidden hill">
+
+                              
+							
+
+							
+							
+                              ____________________________________________________
+                             /                                                    \
+   ____________             /                                                      \
+  /            \           /                                                        \
+ /              \_________/                                                          \
+/_____________________________________________________________________________________\
+</pre>
+<pre class="building hidden chest" title="Chest">
+
+
+ _
+|_|
+</pre>
+<pre class="building hidden castle" title="Castle of Zombies">
+     p                  p         p
+    /\     p      p    /\        /\
+   /__\   /\_____/\   /__\      /__\
+   |. |_=_|. . . .|_=_=_=_=_=_=_|. |
+   |. |. .|  ___  |. . . . . . .|. |
+   |. |   | |   | |             |. |
+___|__|___|_|___|_|_____________|__|__
+</pre>
+<pre class="building hidden laboratory" title="The Laboratory">
+
+
+    __
+    ||
+   ====
+   |  |__
+   |  |-.\
+   |__|  \\
+    ||   ||
+  ======__|
+ ________||__
+/____________\
+</pre>
+<pre class="building hidden portal" title="Nether Portal">
+
+
+
+
+
+
+
+[][][][]
+[]    []
+[]    []
+[]    []
+[][][][]
+</pre>
+<pre class="building hidden airplane" title="Airplane">
+
+
+
+
+
+
+
+
+.--. _        ,---.   ___
+ \# `----------"---=<_)_)_>-.
+ `,_/________.-----,_____,.-`
+      o'     `-==='   `o,   
+</pre>
+<pre class="none">a</pre>
+<div class="road">_</div>
+</div>
+<div id="underground">
+<pre class="dig-step-1 hidden " title="A hole">
+|       |
+|_______|
+</pre>
+<pre class="dig-step-2 hidden ">
+                                |       |
+     __________                /         \____
+    /          \______________/               \___________
+   /                                                      \
+  /                                                        \ 
+ |                                                         |
+ |                                                         |
+ |                                                         |
+ |                                                         |
+ |                                                         |
+ |                                                         |
+ |                                                         |
+ |                                                         |
+ |                                                         |
+ |                                                         |
+ |                                                         |
+ \                                                         /
+  \                                                       /
+   \_____________________________________________________/
+   
+   
+   
+   
+   
+   
+   
+   
+   
+ 
+</pre>
+<pre class="underworld-building training-center hidden " title="Training Center">
+  _____________
+ /             \
+/_______________\
+|               |
+|   TRAINING    |
+|           _   |
+|          | |  |
+|__________|_|__|
+</pre>
+<pre class="underworld-building mining hidden " title="Iron Mine">
+|                      |
+|                      |
+|                      |
+|                      |
+|                      |
+|)*&*(%#%!#$@X$#X&$!%$@|
+\()^**(&%^%&%((%^&$#$%@/
+ \^%^#$$%%$^%@#$%##*%$/
+  \%#@$#%$#@$%#%#$&#%/
+</pre>
+<pre class="underworld-building small-hole hidden" title="A small hole">
+ \
+  |
+  |
+  |
+  |
+ /
+</pre>
+<pre class="digging hidden">
+\_____________________________________
+
+
+
+
+               <span class="click nametag" title="A name tag">_____</span>	
+______________<span class="click nametag" title="A name tag">[_____]</span>_________________
+</pre>
+<pre class="dig-get-chest hidden">
+______________________________________
+
+
+
+
+             <span class="click chest-dig" title="A chest">_</span> 	
+____________<span class="click chest-dig" title="A chest">|_|</span>_______________________
+</pre>
+<pre class="dig-pizzas hidden">
+______________________________________
+
+
+
+
+            
+_______________<span class="click pizzas" title="Badly 'drawn' pizzas">---_-_--_---_-</span>_________
+</pre>
+<pre class="dig-laptop hidden">
+______________________________________
+
+
+
+
+            
+_____________________<span class="click laptop" title="A laptop">_/</span>_______________
+</pre>
+<pre class="dig-sign hidden">
+______________________________________
+
+                          <span class="click sign-dig" title="A sign">__</span>
+                         <span class="click sign-dig" title="A sign">[__]</span>
+
+            
+______________________________________
+</pre>
+</div>
+</div> <!-- penutup #wrapper -->
+	 
+<div id="version">Version: <a href="javascript:changelog();" class="leversion"></a></div>
+<div id="credits">
+<a href="javascript:showbugs();" class="bugs">Bugs</a> - <a href="javascript:showcredits();">Credits</a> - <a href="javascript:showetc();">Etc</a> - <a href="javascript:save();">Save</a> - <a href="javascript:toggle();">Toggle Color</a>
+</div>
+
+<div id="realworld">
+<div id="sky">
+<br><br><br><br><br><br><br><br><br><br>
+<pre class="theportal" title="Portal">
+
+
+
+
+[][][][]
+[]    []
+[]    []
+[]    []
+[][][][]
+</pre>
+<pre class="thefox" title="The Fox">
+
+
+
+            ,^
+           ;  ;
+\`.,'/      ; ;
+/_  _\`-----';
+  \/` ,,,,,, ;
+____)//_____\))_
+</pre>
+<!--pre class="building thefox" title="The Fox">
+
+
+
+
+
+   _,-='"-.__               /\_/\
+   `-.}       `=._,.-==-._.,  @ @._,
+      `-.__   _,-.   )       _,.-'
+___________`"_____G..m-"^m`m'_______
+</pre-->
+<pre class="thehouse" title="A House">
+
+  __________
+ /          \
+/____________\
+|   ______   |
+|  [______]  |
+|        _   |
+|       | |  |
+|_______|_|__|
+</pre>
+<pre class="sand hidden" title="Sand">
+
+
+
+
+           &&!$)$^&%^   )))@(#&!*))(%^$@*$!%))*     #)%$!#^$^##&(             @!@&%^%^)
+         $#*!(*($!&@#^^)!*!*)*^)$&$*#*)@ **&))      !%)^)(^(!#*(@*)$&*^&($@$)*(!!&#!@@%#%*^^
+      $)##*%)%^$(%%%%#!&)*!@*%)*&#(*^%&)!#&^$($#4    #%(^$^^^*^&@^#!@@(&!($#(%)*%$)@*!@)%%)*^@$%
+    $*^!&*()@!(@*$$!&(%!%*$%!#^#!@$)(&%((%&#@)^%$%$%!^*#@&*%##&@^)#%@(@$(%)&#)!#!%^$()*###%#!^%*@#^
+^#$@@)^&^&(%@%$@%)#$@@!$(&%(&&$*%#*!$&)*)#)(@&#)#$$#(*%!^&@@%%*#^$))#$&(&@$!#($#))^^!^^(*%(%$@%&&*!**
+</pre>
+<pre class="hole hidden" title="Hole">
+
+@#            $
+(^(          $%
+(^#*        @(%
+#$%#       %$&#
+|#%$         )|
+|&%&        %*|
+|  (       ^)*|
+|  ()&^       |
+|     $&  &^  |
+|    )@       |
+|             |
+|         )!  |
+|             |
+|   $%^&      |
+|             |
+|             |
+| (*&*        |
+|             |
+|             |
+|       $%#@  |
+|     $       |
+|      %%     |
+|/ ___$*#($*__|
+|             |
+|             |
+|             |
+|             |
+|             |
+|             |
+|        <span class="click boss" title="Someone"> O </span>  |
+|        <span class="click boss" title="Someone">/|\</span>  |
+|        <span class="click boss" title="Someone"> | </span>  |
+|________<span class="click boss" title="Someone">/_\</span>__|
+
+
+
+
+
+
+
+</pre>
+<br><br><br><br><br><br><br><div style="height:30px;"></div>
+<div class="road">_</div>
+</div>
+</div>
+</body>
+</html>
