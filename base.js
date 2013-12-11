@@ -944,7 +944,7 @@ function dighole() {
 	}
 	else {
 		powerhp();
-		battle=makebattle(Math.round(Math.random()*100),"Thief",100,100,"Handmade Sword",7,"A thief, nothing else",0,power,hp,hp,currentsword,false,"vs-thief");
+		battle=makebattle(Math.round(Math.random()*100),"Thief",100,100,"Handmade Sword",3,"A thief, nothing else",0,power,hp,hp,currentsword,false,"vs-thief");
 		html="<div class=\"alert alert-battle1\"><b>Attacked!</b><br>While you are digging the hole, suddenly someone runs towards you and tried to attack you<br><br>"+battle+"</div>";
 		$("#otheralerts").append(html);
 		closemessage();
