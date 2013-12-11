@@ -384,7 +384,7 @@ function buyminingmachine(amount) {
 	}
 }
 function buyminingmachinegold(amount) {
-	theprice=50*amount;
+	theprice=10*amount;
 	if(ironbar>=theprice) {
 		ironbar-=theprice;
 		goldmining+=amount;
