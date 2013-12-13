@@ -2852,8 +2852,11 @@ function ciphercode() {
 	else if(cipherstep==2) {
 		codetocipher="Om s ept;f gi;; pg n;pvld";
 	}
+	else if(cipherstep==3) {
+		codetocipher="VGhlIHBsYW50IGlzIGZhbW91cyBiZWNhdXNlIG9mIHR<br>oZSBhYmlsaXR5IHRvIGN1cmUgc29tZSBkaXNlYXNlcw==";
+	}
 
-	if(cipherstep!=3) {
+	if(cipherstep<4) {
 		makealert("help-ciphering","Cipher some codes","Your boss loves ciphering codes, but he is busy. If you can help him, he promise to give you bonus gold bars as a reward.<br><br>Code #"+(cipherstep+1)+":<br>"+codetocipher+"<br><input type='text' id='cipherthecodeanswer'><br><br><input type='button' value='Submit' onclick='checkchipher()'>",true);
 	}
 	else {
@@ -2908,6 +2911,17 @@ function checkchipher() {
 			goldbar+=2000;
 			closemessage();
 			alert("Correct! You get 2000 gold bars!"); 
+		}
+		else {
+			alert('Wrong!');
+		}
+	}
+	else if(cipherstep==3) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="the plant is famous because of the ability to cure some diseases") {
+			cipherstep++;
+			goldbar+=2500;
+			closemessage();
+			alert("Correct! You get 2500 gold bars!"); 
 		}
 		else {
 			alert('Wrong!');
