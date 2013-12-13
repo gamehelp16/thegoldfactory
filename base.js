@@ -41,11 +41,12 @@ function updategold() {
 		ibtime=1;
 	}
 	
-	if(goldmining<=500&&buyfactory==true) {
-		gbps=Math.round(goldmining/10);
+	if(goldmining<30) {
+		goldmining=30;
 	}
-	else if(goldmining>500) {
-		gbps=50;
+	
+	if(buyfactory==true) {
+		gbps=Math.round(goldmining/10);
 	}
 }
 function updateitems() {
@@ -107,10 +108,14 @@ function updateitems() {
 	}
 	else {
 		$(".button-enchant-countdown").attr("disabled","disabled");
+		$(".enchant-sword-countdown").html("Countdown 1 is the highest level of countdown enchantment");
 	}
 	
 	if(enchant_defense==10) { $(".button-enchant-defense").attr("disabled","disabled"); }
-	if(enchant_life==10) { $(".button-enchant-life").attr("disabled","disabled"); }
+	if(enchant_life==10) { 
+		$(".button-enchant-life").attr("disabled","disabled"); 
+		$(".enchant-sword-life").html("Life 10 is the highest level of life enchantment");
+	}
 	
 	if(airplanecountdown==0) {
 		clearInterval(flyingabcd);
@@ -313,10 +318,10 @@ function checkitem() {
 	if(ironbar < (ironprice*10)) { $(".buy-10-mining").attr("disabled","disabled"); } else { $(".buy-10-mining").removeAttr("disabled"); }
 	if(ironbar < (ironprice*100)) { $(".buy-100-mining").attr("disabled","disabled"); } else { $(".buy-100-mining").removeAttr("disabled"); }
 	if(goldbar < (skilllvl+1)) { $(".upgrade-price").attr("disabled","disabled"); } else { $(".upgrade-price").removeAttr("disabled"); }
-	if(goldbar < 10000) { $(".buy-factory-button").attr("disabled","disabled"); } else { $(".buy-factory-button").removeAttr("disabled"); }
-	if(ironbar < 50) { $(".buy-1-mining-gold").attr("disabled","disabled"); } else { $(".buy-1-mining").removeAttr("disabled"); }
-	if(ironbar < 500) { $(".buy-10-mining-gold").attr("disabled","disabled"); } else { $(".buy-10-mining").removeAttr("disabled"); }
-	if(ironbar < 5000) { $(".buy-100-mining-gold").attr("disabled","disabled"); } else { $(".buy-100-mining").removeAttr("disabled"); }
+	if(goldbar < 5000) { $(".buy-factory-button").attr("disabled","disabled"); } else { $(".buy-factory-button").removeAttr("disabled"); }
+	if(ironbar < goldprice) { $(".buy-1-mining-gold").attr("disabled","disabled"); } else { $(".buy-1-mining").removeAttr("disabled"); }
+	if(ironbar < goldprice*10) { $(".buy-10-mining-gold").attr("disabled","disabled"); } else { $(".buy-10-mining").removeAttr("disabled"); }
+	if(ironbar < goldprice*100) { $(".buy-100-mining-gold").attr("disabled","disabled"); } else { $(".buy-100-mining").removeAttr("disabled"); }
 }
 function buy(item,number) {
 	for(i=0;i<items.length;i++) {
@@ -384,7 +389,7 @@ function buyminingmachine(amount) {
 	}
 }
 function buyminingmachinegold(amount) {
-	theprice=10*amount;
+	theprice=goldprice*amount;
 	if(ironbar>=theprice) {
 		ironbar-=theprice;
 		goldmining+=amount;
@@ -440,7 +445,7 @@ $(document).ready(function() {
 	goldbar=0; //0
 	ironbar=0; //0
 	gbps=1;
-	goldmining=0; //0
+	goldmining=30;
 	ibpt=0;
 	ibtime=3600;
 	ironmining=0;
@@ -451,8 +456,8 @@ $(document).ready(function() {
 	items.push({"name":"wooden sword","price":150,"owned":0,"plural":"s","showstorage":false}); //2
 	items.push({"name":"pizza","price":20,"owned":0,"plural":"s","showstorage":false}); //3
 	items.push({"name":"stone sword","price":500,"owned":0,"plural":"s","showstorage":false}); //4
-	items.push({"name":"iron sword","price":2000,"owned":0,"plural":"s","showstorage":false}); //5
-	items.push({"name":"diamond sword","price":5000,"owned":0,"plural":"s","showstorage":false}); //6
+	items.push({"name":"iron sword","price":1500,"owned":0,"plural":"s","showstorage":false}); //5
+	items.push({"name":"diamond sword","price":4000,"owned":0,"plural":"s","showstorage":false}); //6
 	items.push({"name":"health potion","price":50,"owned":0,"plural":"s","showstorage":true}); //7
 	items.push({"name":"ancient scroll","price":0,"owned":0,"plural":"s","showstorage":true}); //8
 	items.push({"name":"nether stone","price":0,"owned":0,"plural":"s","showstorage":true}); //9
@@ -492,6 +497,7 @@ $(document).ready(function() {
 	theusername="You";
 	theuserdesc="This is you.";
 	
+	cipherstep=0;
 	cheststep=0;
 	searchtimes=0;
 	shovelbroken=0;
@@ -546,12 +552,11 @@ $(document).ready(function() {
 	$("#gold-factory").click(function() {
 		if(!passgate&&!buyfactory) {
 			closemessage();
-			$(".alert-gold-factory").fadeIn("fast");
-			$(".modal").fadeIn("fast");
+			makealert("gold-factory","The Gold Factory","Status: You work here, and you get 1 gold bar per second as the salary<br><br><input type=\"button\" value=\"Make the boss happier\" onclick=\"makebosshappy()\"> and receive bonus!",true)
 		}
 		else if(passgate&&!buyfactory) {
 			closemessage();
-			makealert("buy-factory","The Gold Factory","Status: You work here, and you get 1 gold bar per second as the salary<br><br><input type=\"button\" value=\"Buy this factory\" onclick=\"buythefactory()\" class=\"buy-factory-button\"> for 10000 goldbars and get more goldbars each second!",true)
+			makealert("buy-factory","The Gold Factory","Status: You work here, and you get 1 gold bar per second as the salary<br><br><input type=\"button\" value=\"Make the boss happier\" onclick=\"makebosshappy()\">and receive bonus!<br><input type=\"button\" value=\"Buy this factory\" onclick=\"buythefactory()\" class=\"buy-factory-button\"> for 5000 goldbars and get more goldbars each second!",true)
 		}
 		else if(passgate&&buyfactory) {
 			closemessage();
@@ -610,7 +615,7 @@ $(document).ready(function() {
 		if(passgate&&!unlockenchant) {
 			closemessage();
 			powerhp();
-			battle=makebattle(Math.round(Math.random()*100),"Monster",150,150,"Spatula??",23,"A monster",3,power,hp,hp,currentsword,false,"vs-monster");
+			battle=makebattle(Math.round(Math.random()*100),"Monster",150,150,"Spatula??",15,"A monster",3,power,hp,hp,currentsword,false,"vs-monster");
 			html="<div class=\"alert alert-battle-monster\"><b>Monster!</b><br>There is a dangerous monster in the enchanting shop!<br><br>"+battle+"</div>";
 			$("#otheralerts").append(html);
 			closemessage();
@@ -623,7 +628,7 @@ $(document).ready(function() {
 			}
 			else {
 				closemessage();
-				makealert("enchant-shop","Enchanting Shop","Welcome to the enchanting shop! Here you can enchant your sword<br><br><span class=\"enchants\"></span><br><br>Enchant with <input type=\"button\" value=\"Attack 1\" onclick=\"enchantsword('attack')\" class=\"button-enchant-attack\"> (<span class=\"enchant-attack-price\"></span> gold bars)<!--br>Enchant with <input type=\"button\" value=\"Defense 1\" onclick=\"enchantsword('defense')\" class=\"button-enchant-defense\"> (<span class=\"enchant-defense-price\"></span> gold bars)--><br>Enchant with <input type=\"button\" value=\"Countdown 1\" onclick=\"enchantsword('countdown')\" class=\"button-enchant-countdown\"> (<span class=\"enchant-countdown-price\"></span> gold bars)<br>Enchant with <input type=\"button\" value=\"Life 1\" onclick=\"enchantsword('life')\" class=\"button-enchant-life\"> (<span class=\"enchant-life-price\"></span> gold bars)<br><br>Or, <input type=\"button\" value=\"visit the armor section\" onclick=\"armorshop()\" class=\"button-armor-shop\"> of the shop",true)
+				makealert("enchant-shop","Enchanting Shop","Welcome to the enchanting shop! Here you can enchant your sword<br><br><span class=\"enchants\"></span><br><br><div class='enchant-sword-attack'>Enchant with <input type=\"button\" value=\"Attack 1\" onclick=\"enchantsword('attack')\" class=\"button-enchant-attack\"> (<span class=\"enchant-attack-price\"></span> gold bars)</div><!--br>Enchant with <input type=\"button\" value=\"Defense 1\" onclick=\"enchantsword('defense')\" class=\"button-enchant-defense\"> (<span class=\"enchant-defense-price\"></span> gold bars)--><div class='enchant-sword-countdown'>Enchant with <input type=\"button\" value=\"Countdown 1\" onclick=\"enchantsword('countdown')\" class=\"button-enchant-countdown\"> (<span class=\"enchant-countdown-price\"></span> gold bars)</div><div class='enchant-sword-life'>Enchant with <input type=\"button\" value=\"Life 1\" onclick=\"enchantsword('life')\" class=\"button-enchant-life\"> (<span class=\"enchant-life-price\"></span> gold bars)</div><br><br>Or, <input type=\"button\" value=\"visit the armor section\" onclick=\"armorshop()\" class=\"button-armor-shop\"> of the shop",true)
 				checkthings();
 			}
 		}
@@ -632,7 +637,7 @@ $(document).ready(function() {
 		if(passgate&&!unlockchest) {
 			closemessage();
 			powerhp();
-			battle=makebattle(Math.round(Math.random()*100),"Ghost",500,500,"Invisible hands",35,"This ghost is gurading the chest",4,power,hp,hp,currentsword,false,"vs-ghost");
+			battle=makebattle(Math.round(Math.random()*100),"Ghost",400,400,"Invisible hands",27,"This ghost is gurading the chest",4,power,hp,hp,currentsword,false,"vs-ghost");
 			html="<div class=\"alert alert-battle-ghost\"><b>Ghost</b><br>The chest is guarded by a ghost<br><br>"+battle+"</div>";
 			$("#otheralerts").append(html);
 			closemessage();
@@ -898,9 +903,9 @@ function powerhp() {
 	}
 	power+=enchant_attack*7;
 	hp=100;
-	hp+=Math.floor(items[3].owned/5);
+	hp+=Math.floor(items[3].owned/3.5);
 	thisismyhp=100;
-	thisismyhp+=Math.floor(items[3].owned/5);
+	thisismyhp+=Math.floor(items[3].owned/3.5);
 }
 function testskill() {
 	if(goldbar>=20) {
@@ -916,7 +921,7 @@ function testskill() {
 }
 function showcredits() {
 	closemessage();
-	makealert("credits","Credits","<div style='max-height:300px; overflow-y:auto;'><br>Ascii arts:<br><br>Factory, house, thunder, monster, castle, chest,<br>ghost, airplane, microscope, scroll, fox:<br><a href='http://www.retrojunkie.com/asciiart/asciiart.htm' target='_blank'>http://www.retrojunkie.com/asciiart/asciiart.htm</a> (with a little modification)<br><hr>Cloud:<Br><a href='http://www.geocities.com/spunk1111/nature.htm#clouds' target='_blank'>http://www.geocities.com/spunk1111/nature.htm#clouds</a><br>(taken from a \"landscape\")<br><hr>Computer:<br>aniwey (from Candy Box 2)<br><hr>Some other ascii arts are created by me :D<br><br><br>Inspired by:<br>The \"legendary\" <a href='http://candies.aniwey.net' target='_blank' onclick='candybox=true'>Candy Box</a> game<br>and <a href='http://adarkroom.doublespeakgames.net' target='_blank'>A Dark Room</a><br>and also <a href='http://candybox2.net' target='_blank' onclick='candybox=true'>Candy Box 2</a><br><br>Also thanks to<br>Minecraft for the \"names\", enchanting, and some others :D</div>",true)
+	makealert("credits","Credits","<div style='max-height:300px; overflow-y:auto;'><br>Ascii arts:<br><br>Factory, house, thunder, monster, castle, chest,<br>ghost, airplane, microscope, scroll, fox, rat:<br><a href='http://www.retrojunkie.com/asciiart/asciiart.htm' target='_blank'>http://www.retrojunkie.com/asciiart/asciiart.htm</a> (with a little modification)<br><hr>Cloud:<Br><a href='http://www.geocities.com/spunk1111/nature.htm#clouds' target='_blank'>http://www.geocities.com/spunk1111/nature.htm#clouds</a><br>(taken from a \"landscape\")<br><hr>Computer:<br>aniwey (from Candy Box 2)<br><hr>Some other ascii arts are created by me :D<br><br><br>Inspired by:<br>The \"legendary\" <a href='http://candies.aniwey.net' target='_blank' onclick='candybox=true'>Candy Box</a> game<br>and <a href='http://adarkroom.doublespeakgames.net' target='_blank'>A Dark Room</a><br>and also <a href='http://candybox2.net' target='_blank' onclick='candybox=true'>Candy Box 2</a><br><br>Also thanks to<br>Minecraft for the \"names\", enchanting, and some others :D</div>",true)
 }
 function showetc() {
 	closemessage();
@@ -1010,10 +1015,10 @@ function doupgrade() {
 	}
 }
 function buythefactory() {
-	if(goldbar>=10000) {
-		goldbar-=10000;
+	if(goldbar>=5000) {
+		goldbar-=5000;
 		gbps=3;
-		goldmining=3;
+		goldmining=30;
 		buyfactory=true;
 		checkthings();
 		closemessage();
@@ -1163,7 +1168,7 @@ function showstorage() {
 }
 function changelog() {
 	closemessage();
-	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
+	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>13 December 2013:<br>- <a href='http://reddit.com/r/thegoldfactory' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
 }
 function armorshop() {
 	closemessage();
@@ -1679,6 +1684,9 @@ message='\n\
 		makealert("open-chest","A message","<div style='max-height:300px; overflow-y:auto;'>The chest contains a message:<br><br><pre>"+message+"</pre></div>",true);
 	}
 }
+
+// Just some random comment ;)
+
 function openthechest() {
 	if(cheststep==0) {
 		if(items[21].owned==1) {
@@ -1716,13 +1724,13 @@ function save() {
 
 function dosave(param) {
 	if(param=='text') {
-		prompt("Save the code somewhere safe!", goldbar+"|"+ironbar+"|"+gbps+"|"+goldmining+"|"+ibpt+"|"+ibtime+"|"+ironmining+"|"+items[0].owned+"|"+items[1].owned+"|"+items[2].owned+"|"+items[3].owned+"|"+items[4].owned+"|"+items[5].owned+"|"+items[6].owned+"|"+items[7].owned+"|"+items[8].owned+"|"+items[9].owned+"|"+items[10].owned+"|"+items[11].owned+"|"+items[12].owned+"|"+items[13].owned+"|"+items[14].owned+"|"+items[15].owned+"|"+items[16].owned+"|"+items[17].owned+"|"+items[18].owned+"|"+items[19].owned+"|"+items[20].owned+"|"+items[21].owned+"|"+items[22].owned+"|"+items[23].owned+"|"+items[24].owned+"|"+enchant_attack+"|"+enchant_defense+"|"+enchant_countdown+"|"+enchant_life+"|"+helmet+"|"+chestplate+"|"+pants+"|"+boots+"|"+theusername+"|"+theuserdesc+"|"+cheststep+"|"+searchtimes+"|"+shovelbroken+"|"+cursor+"|"+pizzaeaten+"|"+poisoned+"|"+chestunderground+"|"+talk+"|"+wob+"|"+buyfactory+"|"+skill+"|"+skilllvl+"|"+additionalattack+"|"+clickcloudcount+"|"+openchestcount+"|"+candybox+"|"+hpactive+"|"+airplanecountdown+"|"+digcountdown+"|"+digstep+"|"+currentsword+"|"+passthief+"|"+passworms+"|"+passgate+"|"+unlockenchant+"|"+unlockchest+"|"+beatboss+"|"+hasairplane+"|"+reachedclouds+"|"+defeatinvisiblebot+"|"+gethole+"|"+win+"|"+hasportal);
+		prompt("Save the code somewhere safe!", goldbar+"|"+ironbar+"|"+gbps+"|"+goldmining+"|"+ibpt+"|"+ibtime+"|"+ironmining+"|"+items[0].owned+"|"+items[1].owned+"|"+items[2].owned+"|"+items[3].owned+"|"+items[4].owned+"|"+items[5].owned+"|"+items[6].owned+"|"+items[7].owned+"|"+items[8].owned+"|"+items[9].owned+"|"+items[10].owned+"|"+items[11].owned+"|"+items[12].owned+"|"+items[13].owned+"|"+items[14].owned+"|"+items[15].owned+"|"+items[16].owned+"|"+items[17].owned+"|"+items[18].owned+"|"+items[19].owned+"|"+items[20].owned+"|"+items[21].owned+"|"+items[22].owned+"|"+items[23].owned+"|"+items[24].owned+"|"+enchant_attack+"|"+enchant_defense+"|"+enchant_countdown+"|"+enchant_life+"|"+helmet+"|"+chestplate+"|"+pants+"|"+boots+"|"+theusername+"|"+theuserdesc+"|"+cheststep+"|"+searchtimes+"|"+shovelbroken+"|"+cursor+"|"+pizzaeaten+"|"+poisoned+"|"+chestunderground+"|"+talk+"|"+wob+"|"+buyfactory+"|"+skill+"|"+skilllvl+"|"+additionalattack+"|"+clickcloudcount+"|"+openchestcount+"|"+candybox+"|"+hpactive+"|"+airplanecountdown+"|"+digcountdown+"|"+digstep+"|"+currentsword+"|"+passthief+"|"+passworms+"|"+passgate+"|"+unlockenchant+"|"+unlockchest+"|"+beatboss+"|"+hasairplane+"|"+reachedclouds+"|"+defeatinvisiblebot+"|"+gethole+"|"+win+"|"+hasportal+"|"+cipherstep);
 	}
 	else if(param=='load') {
 		savecode=prompt("Please enter the save code", "Enter the code here");
 		savecode=savecode.split("|");
 		
-		if(savecode.length!=75) {
+		if(savecode.length<75) {
 			alert('Wrong save code?');
 			return;
 		}
@@ -1802,6 +1810,12 @@ function dosave(param) {
 		gethole=(savecode[72] === "true");
 		win=(savecode[73] === "true");
 		hasportal=(savecode[74] === "true");
+		if(savecode.length==76) {
+			cipherstep=parseInt(savecode[75]);
+		}
+		else {
+			cipherstep=0;
+		}
 		
 		checkthings();
 		alert('Because of some issues, you should save your game and refresh the page for changes to apply, sorry :(');
@@ -1886,6 +1900,12 @@ function dosave(param) {
 		gethole=(savecode[72] === "true");
 		win=(savecode[73] === "true");
 		hasportal=(savecode[74] === "true");
+		if(savecode.length==76) {
+			cipherstep=parseInt(savecode[75]);
+		}
+		else {
+			cipherstep=0;
+		}
 		
 		checkthings();
 		
@@ -1896,7 +1916,7 @@ function dosave(param) {
 			alert('Oh snap! It seems that HTML5 Local Storage is not supported on your browser. I recommend you to upgrade your browser or use the text saving method');
 		}
 		
-		localStorage.thegoldfactorygamesave=goldbar+"|"+ironbar+"|"+gbps+"|"+goldmining+"|"+ibpt+"|"+ibtime+"|"+ironmining+"|"+items[0].owned+"|"+items[1].owned+"|"+items[2].owned+"|"+items[3].owned+"|"+items[4].owned+"|"+items[5].owned+"|"+items[6].owned+"|"+items[7].owned+"|"+items[8].owned+"|"+items[9].owned+"|"+items[10].owned+"|"+items[11].owned+"|"+items[12].owned+"|"+items[13].owned+"|"+items[14].owned+"|"+items[15].owned+"|"+items[16].owned+"|"+items[17].owned+"|"+items[18].owned+"|"+items[19].owned+"|"+items[20].owned+"|"+items[21].owned+"|"+items[22].owned+"|"+items[23].owned+"|"+items[24].owned+"|"+enchant_attack+"|"+enchant_defense+"|"+enchant_countdown+"|"+enchant_life+"|"+helmet+"|"+chestplate+"|"+pants+"|"+boots+"|"+theusername+"|"+theuserdesc+"|"+cheststep+"|"+searchtimes+"|"+shovelbroken+"|"+cursor+"|"+pizzaeaten+"|"+poisoned+"|"+chestunderground+"|"+talk+"|"+wob+"|"+buyfactory+"|"+skill+"|"+skilllvl+"|"+additionalattack+"|"+clickcloudcount+"|"+openchestcount+"|"+candybox+"|"+hpactive+"|"+airplanecountdown+"|"+digcountdown+"|"+digstep+"|"+currentsword+"|"+passthief+"|"+passworms+"|"+passgate+"|"+unlockenchant+"|"+unlockchest+"|"+beatboss+"|"+hasairplane+"|"+reachedclouds+"|"+defeatinvisiblebot+"|"+gethole+"|"+win+"|"+hasportal;
+		localStorage.thegoldfactorygamesave=goldbar+"|"+ironbar+"|"+gbps+"|"+goldmining+"|"+ibpt+"|"+ibtime+"|"+ironmining+"|"+items[0].owned+"|"+items[1].owned+"|"+items[2].owned+"|"+items[3].owned+"|"+items[4].owned+"|"+items[5].owned+"|"+items[6].owned+"|"+items[7].owned+"|"+items[8].owned+"|"+items[9].owned+"|"+items[10].owned+"|"+items[11].owned+"|"+items[12].owned+"|"+items[13].owned+"|"+items[14].owned+"|"+items[15].owned+"|"+items[16].owned+"|"+items[17].owned+"|"+items[18].owned+"|"+items[19].owned+"|"+items[20].owned+"|"+items[21].owned+"|"+items[22].owned+"|"+items[23].owned+"|"+items[24].owned+"|"+enchant_attack+"|"+enchant_defense+"|"+enchant_countdown+"|"+enchant_life+"|"+helmet+"|"+chestplate+"|"+pants+"|"+boots+"|"+theusername+"|"+theuserdesc+"|"+cheststep+"|"+searchtimes+"|"+shovelbroken+"|"+cursor+"|"+pizzaeaten+"|"+poisoned+"|"+chestunderground+"|"+talk+"|"+wob+"|"+buyfactory+"|"+skill+"|"+skilllvl+"|"+additionalattack+"|"+clickcloudcount+"|"+openchestcount+"|"+candybox+"|"+hpactive+"|"+airplanecountdown+"|"+digcountdown+"|"+digstep+"|"+currentsword+"|"+passthief+"|"+passworms+"|"+passgate+"|"+unlockenchant+"|"+unlockchest+"|"+beatboss+"|"+hasairplane+"|"+reachedclouds+"|"+defeatinvisiblebot+"|"+gethole+"|"+win+"|"+hasportal+"|"+cipherstep;
 		alert('Your game has been saved!');
 	}
 }
@@ -1991,6 +2011,11 @@ enemyasciis.push("\n\
 /_  _\\`-----';\n\
   \\/` ,,,,,, ;\n\
     )//     \\))");
+enemyasciis.push("\n\
+	   _  _\n\
+  (o)(o)--.\n\
+   \\../ (  )\n\
+   m\\/m--m'`--.");
 output2="<tr><td>";
 output2=output2+"<pre style=\"opacity:0;\">\n\
      O\n\
@@ -2101,6 +2126,7 @@ output="<table id=\"battle-"+id+"\">"+output2+"</table><br><div class=\"buttons-
 			myhealthpoint(true,myhp);
 		}
 		enemyhealthpoint(true,hp);
+		enemyhealthpoint2(true,hp);
 		setTimeout(function(){enemyattack(id,damage);},2000);
 		healthpotion(id);
 		skillbutton(id);
@@ -2430,6 +2456,7 @@ function healthdelay(id,sec) {
 }
 function myhealthpoint(set,health) { if(!set) { return myhp; } else { myhp=health; } }
 function enemyhealthpoint(set,health) { if(!set) { return enemyhp; } else { enemyhp=health; } }
+function enemyhealthpoint2(set,health) { if(!set) { return enemyhp2; } else { enemyhp2=health; } }
 function theparam(set,param) { if(!set) { return theparameter; } else { theparameter=param; } }
 function isinvuln(set,invuln) { if(!set) { return invulncond; } else { invulncond=invuln; } }
 function battlestop(set,stop) { if(!set) { return isstop; } else { isstop=stop; } }
@@ -2444,7 +2471,7 @@ function winbattle(param,id) {
 	if(param=="vs-thief") {
 		passthief=true;
 		closemessage();
-		makealert("new-shop","Thanks!","Hi, i'm Andrew, thanks for helping us to kill the thief!<br>Btw I just built a new shop, maybe you want to buy something",true);
+		makealert("new-shop","Thanks!","Hi, i'm Andrew, thanks for helping us kill the thief!<br>Btw I just built a new shop, maybe you want to buy something",true);
 		checkthings();
 	}
 	else if(param=="vs-worms"){
@@ -2461,7 +2488,8 @@ function winbattle(param,id) {
 	else if(param=="vs-monster"){
 		closemessage();
 		unlockenchant=true;
-		makealert("enchant-unlocked","Enchanting shop","You can visit enchanting shop and enchant your sword now!",true);
+		makealert("enchant-unlocked","Enchanting shop","You can visit enchanting shop and enchant your sword now!<br>And the owner of the enchanting shop gives you 5000 goldbars as a reward!",true);
+		goldbar+=5000;
 	}
 	else if(param=="vs-ghost"){
 		closemessage();
@@ -2476,7 +2504,7 @@ chest='\n\
 % \\ | %  ))   |\n\
 %  \\|%________|\n\
  %%%%';
-		goldbar+=5000;
+		goldbar+=10000;
 		html="<div class=\"alert alert-chest-unlocked\"><b>A Chest!</b><br>The chest contains 5000 goldbars + an ancient scroll<br><br><pre>"+chest+"</pre><br><br><input type=\"button\" value=\"Read scroll\" onclick=\"readscroll()\"></div>";
 		$("#otheralerts").append(html);
 		closemessage();
@@ -2552,6 +2580,12 @@ scroll='\n\
 			makealert("boss-win","Almost!","<marquee direction=\"up\" scrollamount=\"2\" scrolldelay=\"1\" onmouseover=\"this.stop()\" onmouseout=\"this.start();\" behavior=\"slide\">You (almost) killed the guy<br>but he successfully recover 1 hp before dying<br><br><br><br><br><br>But....<br><br><br><br>You have learned something.......<br><br><br><br><br><br><br><br>You can't solve a problem by doing a revenge......<br><br><br><br><br><br><br><br>The best way is to talk to the guy himself and forgive him......<br><br><br><br><br><br><br><br>Since killing won't solve the problem......<br><br><br><br><br><br><br><br>You have talked to him and forgive him<br><br><br><br>Everything is normal now<br><br><br><br>And now he wants you to teleport back to the real world.............<br><br><br><br>But, you finally choose to live in this 'weird' world<br><br><br><br>You have done so many things in this world<br><br><br><br>and you learned to love this world<br><br><br><br>and you don't even want to go back<br><br><br><br><br><br><br><br>Oh, btw he has a chest for you<br><br><br><br><input type='button' onclick='chest()' value='Open the chest'><br><br></marquee>",true);
 			$(".button-close-window-boss-win").hide();
 		},2000);
+	}
+	else if(param=="vs-rat"){
+		closemessage();
+		reward=enemyhealthpoint2(false,0);
+		goldbar+=reward;
+		makealert("win-vs-rat","The rat died","You killed the rat, and your boss gave you "+reward+" gold bars!<br><br><input type='button' value=\"Kill more rats!\" onclick='battlevsrats()'>",true);
 	}
 }
 
@@ -2789,4 +2823,94 @@ function mixitems() {
 	thecauldron("make",0,0);
 	thecauldron("show",0,0);
 	updateitemlist();
+}
+
+function makebosshappy() {
+	closemessage();
+	makealert("how-to-make-boss-happy","Make your boss happier","To make him happier and get some bonus gold bars, you can do these things:<br><br><input type='button' value='Kill some rats that sometimes enter the factory at night' onclick='killrats()'><br><input type='button' value='Help him ciphering codes' onclick='ciphercode()'>",true);
+}
+function killrats() {
+	if(items[2].owned==0) {
+		closemessage();
+		makealert("no-weapon","No weapon","Oh snap, it seems that you don't have any weapon therefore you can't kill rats",true);
+	}
+	else {
+		closemessage();
+		makealert("kill-rats","Kill some rats","For you, searching the rats is not a big deal, the problem is the stronger you are, the rats are stronger too! :o<br><br><input type='button' value=\"I'm ready!\" onclick='battlevsrats()'>",true);
+	}
+}
+function ciphercode() {
+
+	closemessage();
+	
+	if(cipherstep==0) {
+		codetocipher="13-1-19-20-5-18 2-18-1-14-3-8";
+	}
+	else if(cipherstep==1) {
+		codetocipher="Lzwjw ak s ljwskmjw zavvwf kgewozwjw, al ak dguslwv sl s kwujwl hdsuw af lzw Hsuaxau Guwsf";
+	}
+	else if(cipherstep==2) {
+		codetocipher="Om s ept;f gi;; pg n;pvld";
+	}
+
+	if(cipherstep!=3) {
+		makealert("help-ciphering","Cipher some codes","Your boss loves ciphering codes, but he is busy. If you can help him, he promise to give you bonus gold bars as a reward.<br><br>Code #"+(cipherstep+1)+":<br>"+codetocipher+"<br><input type='text' id='cipherthecodeanswer'><br><br><input type='button' value='Submit' onclick='checkchipher()'>",true);
+	}
+	else {
+		makealert("no-more-codes","No more codes","Sorry, there are no more codes to cipher",true);
+	}
+}
+function battlevsrats() {
+	if(items[2].owned!=0) {
+		powerhp();
+		hpdivide=Math.ceil(hp/5);
+		battle=makebattle(Math.round(Math.random()*100),"A Rat",hp-hpdivide,hp-hpdivide,"Their body",power-Math.ceil(power/5),"An annoying rat",11,power,hp,hp,currentsword,false,"vs-rat");
+		html="<div class=\"alert alert-battle-rats\"><b>Rat!</b><br>Kill it!!<br><br>"+battle+"</div>";
+		$("#otheralerts").append(html);
+		closemessage();
+		$(".alert-battle-rats").fadeIn("fast");
+	}
+}
+function checkchipher() {
+
+	/*
+	
+		Don't cheat please!!!
+		PLEASE!!!
+		
+	*/
+
+	if(cipherstep==0) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="master branch") {
+			cipherstep++;
+			goldbar+=200;
+			closemessage();
+			alert("Correct! But since this is an easy one, you 'only' get 200 gold bars"); 
+		}
+		else {
+			alert('Wrong!');
+		}
+	}
+	else if(cipherstep==1) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="there is a treasure hidden somewhere, it is located at a secret place in the pacific ocean") {
+			cipherstep++;
+			goldbar+=1000;
+			closemessage();
+			alert("Correct! You get 1000 gold bars!"); 
+		}
+		else {
+			alert('Wrong!');
+		}
+	}
+	else if(cipherstep==2) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="in a world full of blocks") {
+			cipherstep++;
+			goldbar+=2000;
+			closemessage();
+			alert("Correct! You get 2000 gold bars!"); 
+		}
+		else {
+			alert('Wrong!');
+		}
+	}
 }
