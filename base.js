@@ -118,7 +118,9 @@ function updateitems() {
 	}
 	
 	if(airplanecountdown==0) {
-		clearInterval(flyingabcd);
+		if(typeof flyingabcd !== 'undefined') {
+			clearInterval(flyingabcd);
+		}
 		reachedclouds=true;
 	}
 	if(airplanecountdown<0) {
@@ -230,6 +232,10 @@ function updateitems() {
 	if(items[6].owned>=1) {	
 		$(".diamond-sword-shop").hide();
 		$(".need-iron").show();
+	}
+	
+	if(pizzaeaten==="poisoned") {
+		pizzaeaten=true;
 	}
 	
 }
@@ -764,11 +770,13 @@ chestascii='\n\
 		if(!pizzaeaten) {
 			makealert("pizza-alert","Pizzas?","You found some pizzas, you don't know they are rotten or not<br>Do you want to eat them?<br><br><input type='button' value='Eat the pizzas' onclick='eatpizza()'>",true);
 		}
-		else if(pizzaeaten == true) {
-			makealert("pizza-alert","Pizzas","There are some leftovers, and you decided not to eat them",true);
-		}
-		else {
-			makealert("pizzas-rotten","Nom.. nom..","You eat the pizzas, but... they are rotten!<br>You are poisoned, this causes you to die easily in battles even if you have a lot of hp<br><br>Luckily you can heal yourself by drinking 10 health potions<br><br><input type=\"button\" value=\"Drink 10 health potions\" onclick=\"healme()\">",true);
+		else if(pizzaeaten) {
+			if(!poisoned) {
+				makealert("pizza-alert","Pizzas","There are some leftovers, and you decided not to eat them",true);
+			}
+			else {
+				makealert("pizzas-rotten","Nom.. nom..","You eat the pizzas, but... they are rotten!<br>You are poisoned, this causes you to die easily in battles even if you have a lot of hp<br><br>Luckily you can heal yourself by drinking 10 health potions<br><br><input type=\"button\" value=\"Drink 10 health potions\" onclick=\"healme()\">",true);
+			}
 		}
 	});
 	$(".laptop").click(function() {
@@ -834,12 +842,12 @@ computer="                                            _________________\n\
 story="\n\
 \n\
        _\n\
-   .•'   '•.    \"Who is standing there?               O\n\
+   .â€¢'   'â€¢.    \"Who is standing there?               O\n\
   /         \\    Hmmmm..... That's weird :/\"         /|\\\n\
  |           |                                        |\n\
  |           |                                       / \\\n\
   \\         /    <input type='button' value='Next >' onclick='guy(1)'>                              \n\
-   '•.   .•'\n\
+   'â€¢.   .â€¢'\n\
      /   \\\n\
     / | | \\\n\
    / /| |\\ \\\n\
@@ -1168,7 +1176,7 @@ function showstorage() {
 }
 function changelog() {
 	closemessage();
-	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>13 December 2013:<br>- <a href='http://reddit.com/r/thegoldfactory' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
+	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
 }
 function armorshop() {
 	closemessage();
@@ -1360,7 +1368,7 @@ function eatpizza() {
 	else {
 		makealert("pizzas-rotten","Nom.. nom..","You eat the pizzas, but... they are rotten!<br>You are poisoned, this causes you to die easily in battles even if you have a lot of hp<br><br>Luckily you can heal yourself by drinking 10 health potions<br><br><input type=\"button\" value=\"Drink 10 health potions\" onclick=\"healme()\">",true);
 		poisoned=true;
-		pizzaeaten="poisoned";
+		pizzaeaten=true;
 	}
 }
 function healme() {
@@ -1368,7 +1376,6 @@ function healme() {
 		items[7].owned-=10;
 		poisoned=false;
 		makealert("drink-10-health-potion","Healed","You drank 10 health potions and now you are not posioned anymore",true);
-		pizzaeaten=true;
 	}
 }
 function cookieclicker(action) {
@@ -1567,12 +1574,12 @@ function guy(step) {
 	if(step==1) {
 story="\n\
        _\n\
-   .•'   '•.    \"It seems that I have ever seen       O\n\
+   .â€¢'   'â€¢.    \"It seems that I have ever seen       O\n\
   /         \\    that guy before, hmmmm....\"         /|\\\n\
  |           |                                        |\n\
  |           |                                       / \\\n\
   \\         /    <input type='button' value='Next >' onclick='guy(2)'>                              \n\
-   '•.   .•'\n\
+   'â€¢.   .â€¢'\n\
      /   \\\n\
     / | | \\\n\
    / /| |\\ \\\n\
@@ -1583,12 +1590,12 @@ story="\n\
 	else if(step==2) {
 story="\n\
        _\n\
-   .•'   '•.    \"Oh, yes, I know him!                 O\n\
+   .â€¢'   'â€¢.    \"Oh, yes, I know him!                 O\n\
   /         \\    he is the one who brought me        /|\\\n\
  |           |    to this weird world >:C\"            |\n\
  |           |                                       / \\\n\
   \\         /    <input type='button' value='Next >' onclick='guy(3)'>                              \n\
-   '•.   .•'\n\
+   'â€¢.   .â€¢'\n\
      /   \\\n\
     / | | \\\n\
    / /| |\\ \\\n\
@@ -1599,12 +1606,12 @@ story="\n\
 	else if(step==3) {
 story="\n\
        _\n\
-   .•'   '•.    \"I must kill him!\"                    O\n\
+   .â€¢'   'â€¢.    \"I must kill him!\"                    O\n\
   /         \\                                        /|\\\n\
  |           |                                        |\n\
  |           |                                       / \\\n\
   \\         /    <input type='button' value='Next >' onclick='guy(4)'>                              \n\
-   '•.   .•'\n\
+   'â€¢.   .â€¢'\n\
      /   \\\n\
     / | | \\\n\
    / /| |\\ \\\n\
@@ -1615,12 +1622,12 @@ story="\n\
 	else if(step==4) {
 story="\n\
        _\n\
-   .•'   '•.                    \"No, you can't kill   O\n\
+   .â€¢'   'â€¢.                    \"No, you can't kill   O\n\
   /         \\                   me, you idiot >:(\"   /|\\\n\
  |           |                                        |\n\
  |           |                                       / \\\n\
   \\         /    <input type='button' value='Fight!' onclick='guy(5)'>                              \n\
-   '•.   .•'\n\
+   'â€¢.   .â€¢'\n\
      /   \\\n\
     / | | \\\n\
    / /| |\\ \\\n\
@@ -2127,7 +2134,7 @@ output="<table id=\"battle-"+id+"\">"+output2+"</table><br><div class=\"buttons-
 		}
 		enemyhealthpoint(true,hp);
 		enemyhealthpoint2(true,hp);
-		setTimeout(function(){enemyattack(id,damage);},2000);
+		setTimeout(function(){enemyattack(id,damage);},2000+Math.random()*1000);
 		healthpotion(id);
 		skillbutton(id);
 		potionsbutton(id);
@@ -2139,6 +2146,21 @@ output="<table id=\"battle-"+id+"\">"+output2+"</table><br><div class=\"buttons-
 		theenemyascii(true,enemyascii);
 		theenemyname123(true,name);
 		$(".modal").fadeIn();
+		if(typeof attacktimeout !== 'undefined') {
+			clearTimeout(attacktimeout);
+		}
+		if(typeof healthtimeout !== 'undefined') {
+			clearTimeout(healthtimeout);
+		}
+		if(typeof skilltimeout !== 'undefined') {
+			clearTimeout(skilltimeout);
+		}
+		if(typeof invulnerabilitydelay !== 'undefined') {
+			clearTimeout(invulnerabilitydelay);
+		}
+		attackdelay(id,0);
+		healthdelay(id,0);
+		skilldelay(id,0);
 	}
 	
 	if(!loop) {
@@ -2212,7 +2234,7 @@ function enemyattack(id,damage) {
 					}
 				},200);
 				myhp=myhealthpoint(false,0);
-				asdasdf=setTimeout(function(){enemyattack(id,damage,myhealthpoint(false,0));},2000);
+				asdasdf=setTimeout(function(){enemyattack(id,damage);},2000+Math.random()*1000);
 			}
 		}
 		$(".button-health-"+id).attr("onclick","drinkhealthpotion("+id+","+myhealthpoint(false,0)+")");
@@ -2352,7 +2374,7 @@ function usetheskill(id) {
 		else {
 			$(".player-"+id).css("opacity","0.5");
 			isinvuln(true,true);
-			setTimeout(function() {
+			invulnerabilitydelay=setTimeout(function() {
 				$(".player-"+id).css("opacity","1");
 				isinvuln(true,false);
 			},(3+(skilllvl*3))*1000);
@@ -2526,13 +2548,13 @@ chest='\n\
 	}
 	else if(param=="vs-castle-boss"){
 		closemessage();
-		beatboss=true;
-		items[9].owned=14;
 		if(beatboss) {
 			makealert("castle-beated","Yay!","You defeated the boss (again)! No more nether stones for ya! :(",true);
 		}
 		else {
 			makealert("castle-beated","Yay!","You defeated the boss! And you found 14 nether stones!",true);
+			beatboss=true;
+			items[9].owned=14;
 		}
 	}
 	else if(param.slice(0,14)=="in-the-nether-"){
@@ -2866,8 +2888,8 @@ function ciphercode() {
 function battlevsrats() {
 	if(items[2].owned!=0) {
 		powerhp();
-		hpdivide=Math.ceil(hp/5);
-		battle=makebattle(Math.round(Math.random()*100),"A Rat",hp-hpdivide,hp-hpdivide,"Their body",power-Math.ceil(power/5),"An annoying rat",11,power,hp,hp,currentsword,false,"vs-rat");
+		hpdivide=Math.ceil(hp/4.5);
+		battle=makebattle(Math.round(Math.random()*100),"A Rat",hp-hpdivide,hp-hpdivide,"Their body",power-Math.ceil(power/2.5),"An annoying rat",11,power,hp,hp,currentsword,false,"vs-rat");
 		html="<div class=\"alert alert-battle-rats\"><b>Rat!</b><br>Kill it!!<br><br>"+battle+"</div>";
 		$("#otheralerts").append(html);
 		closemessage();
