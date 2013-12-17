@@ -2227,6 +2227,10 @@ function enemyattack(id,damage) {
 					if(myhealthpoint(false,0)<=0) {
 						myhealthpoint(true,0)
 						myhp=myhealthpoint(false,0);
+						if (typeof asdasdf !== 'undefined') {
+							clearTimeout(asdasdf);
+							asdasdf = undefined;
+						}
 						enemyattack(id,damage,myhp);
 						if(!lagipusing) {
 							$(".enemy-"+id).animate({"margin-left":0+"px"},200);
