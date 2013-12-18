@@ -10,6 +10,12 @@
 
 */
 
+var enemy_attack_timer;
+var healthtimeout;
+var skilltimeout;
+var potiontimeout;
+var invulnerabilitydelay;
+
 function randomnumber(min,max) {
 	return Math.floor(Math.random()*(max-min)+min);
 }
@@ -622,8 +628,9 @@ $(document).ready(function() {
 			closemessage();
 			powerhp();
 			battle=makebattle(Math.round(Math.random()*100),"Monster",150,150,"Spatula??",15,"A monster",3,power,hp,hp,currentsword,false,"vs-monster");
-			html="<div class=\"alert alert-battle-monster\"><b>Monster!</b><br>There is a dangerous monster in the enchanting shop!<br><br>"+battle+"</div>";
+			html="<div class=\"alert alert-battle-monster\"><b>Monster!</b><br>There is a dangerous monster in the enchanting shop!<br><br>"+battle.html+"</div>";
 			$("#otheralerts").append(html);
+			battle.init();
 			closemessage();
 			$(".alert-battle-monster").fadeIn("fast");
 		}
@@ -644,8 +651,9 @@ $(document).ready(function() {
 			closemessage();
 			powerhp();
 			battle=makebattle(Math.round(Math.random()*100),"Ghost",400,400,"Invisible hands",27,"This ghost is gurading the chest",4,power,hp,hp,currentsword,false,"vs-ghost");
-			html="<div class=\"alert alert-battle-ghost\"><b>Ghost</b><br>The chest is guarded by a ghost<br><br>"+battle+"</div>";
+			html="<div class=\"alert alert-battle-ghost\"><b>Ghost</b><br>The chest is guarded by a ghost<br><br>"+battle.html+"</div>";
 			$("#otheralerts").append(html);
+			battle.init();
 			closemessage();
 			$(".alert-battle-ghost").fadeIn("fast");
 		}
@@ -802,8 +810,9 @@ chestascii='\n\
 		closemessage();
 		powerhp();
 		battle=makebattle(Math.round(Math.random()*100),"The Fox",2000,2000,"Unknown",1,"A fox!",10,power,hp,hp,currentsword,false,"vs-fox");
-		html="<div class=\"alert alert-battle-fox\"><b>The Fox</b><br>You choose to kill the fox<br><br>"+battle+"<br><br><input type=\"button\" value=\"Or stop attacking the innocent fox\" onclick=\"myhealthpoint(true,0); closemessage();\"></div>";
+		html="<div class=\"alert alert-battle-fox\"><b>The Fox</b><br>You choose to kill the fox<br><br>"+battle.html+"<br><br><input type=\"button\" value=\"Or stop attacking the innocent fox\" onclick=\"myhealthpoint(true,0); closemessage();\"></div>";
 		$("#otheralerts").append(html);
+		battle.init();
 		closemessage();
 		$(".alert-battle-fox").fadeIn("fast");
 	});
@@ -921,8 +930,9 @@ function testskill() {
 		powerhp();
 		hpdivide10=Math.ceil(hp/10);
 		battle=makebattle(Math.round(Math.random()*100),"Training Robot",hp+hpdivide10,hp+hpdivide10,"Short ranged laser!",power+Math.ceil(power/10),"A training robot",2,power,hp,hp,currentsword,false,"training");
-		html="<div class=\"alert alert-training\"><b>Test my skill!</b><br>Let's see how strong you are<br><br>"+battle+"</div>";
+		html="<div class=\"alert alert-training\"><b>Test my skill!</b><br>Let's see how strong you are<br><br>"+battle.html+"</div>";
 		$("#otheralerts").append(html);
+		battle.init();
 		closemessage();
 		$(".alert-training").fadeIn("fast");
 	}
@@ -958,8 +968,9 @@ function dighole() {
 	else {
 		powerhp();
 		battle=makebattle(Math.round(Math.random()*100),"Thief",100,100,"Handmade Sword",3,"A thief, nothing else",0,power,hp,hp,currentsword,false,"vs-thief");
-		html="<div class=\"alert alert-battle1\"><b>Attacked!</b><br>While you are digging the hole, suddenly someone runs towards you and tried to attack you<br><br>"+battle+"</div>";
+		html="<div class=\"alert alert-battle1\"><b>Attacked!</b><br>While you are digging the hole, suddenly someone runs towards you and tried to attack you<br><br>"+battle.html+"</div>";
 		$("#otheralerts").append(html);
+		battle.init();
 		closemessage();
 		$(".alert-battle1").fadeIn("fast");
 	}
@@ -967,8 +978,9 @@ function dighole() {
 function continuedigging() {
 	powerhp();
 	battle=makebattle(Math.round(Math.random()*100),"Worms",80,80,"Their body",15,"Worms!",1,power,hp,hp,currentsword,false,"vs-worms");
-	html="<div class=\"alert alert-battle2\"><b>Worms! :o</b><br>There are worms under the ground!<br>They seemed to be mad because you destroyed their home<br><br>"+battle+"</div>";
+	html="<div class=\"alert alert-battle2\"><b>Worms! :o</b><br>There are worms under the ground!<br>They seemed to be mad because you destroyed their home<br><br>"+battle.html+"</div>";
 	$("#otheralerts").append(html);
+	battle.init();
 	closemessage();
 	$(".alert-battle2").fadeIn("fast");
 }
@@ -1058,28 +1070,31 @@ function entercastle() {
 	closemessage();
 	powerhp();
 	battle=makebattle(Math.round(Math.random()*100),"Castle Guard",200,200,"Butter Sword!",30,"Guards the castle.",0,power,hp,hp,currentsword,false,"vs-castle-guard");
-	html="<div class=\"alert alert-castle\"><b>Castle</b><br>You are entering the castle...<br><br><div class=\"castle-steps\"><span class=\"castle-entrance\">Castle Entrance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-hall\">Castle Hall</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-room\">King's Room</span></div><br><br>"+battle+"</div>";
+	html="<div class=\"alert alert-castle\"><b>Castle</b><br>You are entering the castle...<br><br><div class=\"castle-steps\"><span class=\"castle-entrance\">Castle Entrance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-hall\">Castle Hall</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-room\">King's Room</span></div><br><br>"+battle.html+"</div>";
 	$("#otheralerts").append(html);
 	$(".castle-hall").addClass("grey");
 	$(".castle-room").addClass("grey");
+	battle.init();
 	$(".alert-castle").fadeIn("fast");
 }
 function castlegotohall(myfinalhp) {
 	powerhp();
 	battle=makebattle(Math.round(Math.random()*100),"Castle Staff",300,300,"Sword-like-knife",20,"The staff makes the castle look good.",0,power,myfinalhp,hp,currentsword,false,"vs-castle-staff");
-	html="<div class=\"alert alert-castle-hall\"><b>Castle</b><br>You are inside the castle...<br><br><div class=\"castle-steps\"><span class=\"castle-entrance\">Castle Entrance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-hall\">Castle Hall</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-room\">King's Room</span></div><br><br>"+battle+"</div>";
+	html="<div class=\"alert alert-castle-hall\"><b>Castle</b><br>You are inside the castle...<br><br><div class=\"castle-steps\"><span class=\"castle-entrance\">Castle Entrance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-hall\">Castle Hall</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-room\">King's Room</span></div><br><br>"+battle.html+"</div>";
 	$("#otheralerts").append(html);
 	$(".castle-entrance").addClass("grey");
 	$(".castle-room").addClass("grey");
+	battle.init();
 	$(".alert-castle-hall").fadeIn("fast");
 }
 function castlegotoking(myfinalhp) {
 	powerhp();
 	battle=makebattle(Math.round(Math.random()*100),"Zombie King",750,750,"Diamond Sword",50,"I AM THE BOSS!!",0,power,myfinalhp,hp,currentsword,false,"vs-castle-boss");
-	html="<div class=\"alert alert-castle-king\"><b>Castle</b><br>You are in front of the king! :o<br><br><div class=\"castle-steps\"><span class=\"castle-entrance\">Castle Entrance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-hall\">Castle Hall</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-room\">King's Room</span></div><br><br>"+battle+"</div>";
+	html="<div class=\"alert alert-castle-king\"><b>Castle</b><br>You are in front of the king! :o<br><br><div class=\"castle-steps\"><span class=\"castle-entrance\">Castle Entrance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-hall\">Castle Hall</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-room\">King's Room</span></div><br><br>"+battle.html+"</div>";
 	$("#otheralerts").append(html);
 	$(".castle-entrance").addClass("grey");
 	$(".castle-hall").addClass("grey");
+	battle.init();
 	$(".alert-castle-king").fadeIn("fast");
 }
 function buyairplane() {
@@ -1155,7 +1170,8 @@ function enterportal(step,thehp2) {
 			else {
 				battle=makebattle(Math.round(Math.random()*100),"Weakened Ghost",200,200,"Invisible hands",17,"A weakened ghost.",4,power,hp,maxhp,currentsword,false,"in-the-nether-"+step);
 			}
-			$("#nether-battle-area").html(battle);
+			$("#nether-battle-area").html(battle.html);
+			battle.init();
 		}
 		else {
 			step++;
@@ -1395,8 +1411,9 @@ function vsinvisiblebot() {
 	closemessage();
 	powerhp();
 	battle=makebattle(Math.round(Math.random()*100),"Invisible Bot",300,300,"Invisible Sword",30,"An invisible bot",9,power,hp,hp,currentsword,false,"vs-invisible-bot");
-	html="<div class=\"alert alert-battle-invisible-bot\"><b>Invisible Bot</b><br>Here is the invisible bot, good luck!<br><br>"+battle+"</div>";
+	html="<div class=\"alert alert-battle-invisible-bot\"><b>Invisible Bot</b><br>Here is the invisible bot, good luck!<br><br>"+battle.html+"</div>";
 	$("#otheralerts").append(html);
+	battle.init();
 	closemessage();
 	$(".alert-battle-invisible-bot").fadeIn("fast");
 }
@@ -1641,8 +1658,9 @@ PS: He heals 3 HP each time he attacks you and he also absorb some damage from y
 		closemessage();
 		powerhp();
 		battle=makebattle(Math.round(Math.random()*100),"Mr. Professor",1000,1000,"Super powerful sword",50,"He brought you to this weird world!",0,power,hp,hp,currentsword,false,"vs-boss");
-		html="<div class=\"alert alert-boss-fight\"><b>Fight! Fight! Fight!</b><br>This dude has brought you to this weird world without permission, you have been searching for him for a long time, and now you found him!<br><br>"+battle+"</div>";
+		html="<div class=\"alert alert-boss-fight\"><b>Fight! Fight! Fight!</b><br>This dude has brought you to this weird world without permission, you have been searching for him for a long time, and now you found him!<br><br>"+battle.html+"</div>";
 		$("#otheralerts").append(html);
+		battle.init();
 		closemessage();
 		$(".alert-boss-fight").fadeIn("fast");
 	}
@@ -2125,6 +2143,9 @@ output="<table id=\"battle-"+id+"\">"+output2+"</table><br><div class=\"buttons-
 		setTimeout(function(){closemessage();},2000);
 	}
 	else {
+		// this should have happened already, but just in case
+		stop_battle_timers();
+
 		if(poisoned) {
 			$(".player-"+id+"-hp").html(10);
 			myhealthpoint(true,10);
@@ -2134,10 +2155,7 @@ output="<table id=\"battle-"+id+"\">"+output2+"</table><br><div class=\"buttons-
 		}
 		enemyhealthpoint(true,hp);
 		enemyhealthpoint2(true,hp);
-		setTimeout(function(){enemyattack(id,damage);},2000+Math.random()*1000);
-		healthpotion(id);
-		skillbutton(id);
-		potionsbutton(id);
+		enemy_attack_timer = setTimeout(function(){enemyattack(id,damage);},2000+Math.random()*1000);
 		theparam(true,param);
 		isinvuln(true,false);
 		battlestop(true,false);
@@ -2146,28 +2164,25 @@ output="<table id=\"battle-"+id+"\">"+output2+"</table><br><div class=\"buttons-
 		theenemyascii(true,enemyascii);
 		theenemyname123(true,name);
 		$(".modal").fadeIn();
-		if(typeof attacktimeout !== 'undefined') {
-			clearTimeout(attacktimeout);
-		}
-		if(typeof healthtimeout !== 'undefined') {
-			clearTimeout(healthtimeout);
-		}
-		if(typeof skilltimeout !== 'undefined') {
-			clearTimeout(skilltimeout);
-		}
-		if(typeof invulnerabilitydelay !== 'undefined') {
-			clearTimeout(invulnerabilitydelay);
-		}
 		attackdelay(id,0);
 		healthdelay(id,0);
 		skilldelay(id,0);
 	}
 	
+	var init_func = function() { 
+						checkhealthbutton(id);
+						checkskillbutton(id);
+						checkpotionsbutton(id);
+				};
+	
 	if(!loop) {
-		return output;
+		return { html: output,
+			     init: init_func
+				};
 	}
 	else {
 		$("#battle-"+id).html(output2);
+		init_func();
 	}
 }
 function enemyattack(id,damage) {
@@ -2177,7 +2192,7 @@ function enemyattack(id,damage) {
 	else {
 		$(".button-health-"+id).attr("onclick","drinkhealthpotion("+id+","+myhealthpoint(false,0)+")");
 		if(myhealthpoint(false,0)<=0) {
-			battlestop(true,true);
+			battle_ended();
 			setTimeout(function(){closemessage();},0);
 			//clearTiemout(asdasdf);
 		}
@@ -2188,7 +2203,9 @@ function enemyattack(id,damage) {
 					$(".enemy-"+id).animate({"margin-left":-160+"px"},200);
 					$(".enemy-sword-"+id).animate({"margin-left":-160+"px"},200);
 				}
-				setTimeout(function(){
+				enemy_attack_timer = setTimeout(function(){
+					// actually perform the attack
+					// this timer is set to coincide with the completion of the above animate() calls [200ms]
 					lagipusing=false;
 					if(isinvuln(false,0)==false) {
 						if(enemyconfused(false,0)) {
@@ -2231,10 +2248,10 @@ function enemyattack(id,damage) {
 							enemyhealthpoint(true,hp);
 							$(".enemy-"+id+"-hp").html(hp);
 						}
+						// Schedule a new attack
+						enemy_attack_timer = setTimeout(function(){enemyattack(id,damage);},1800+Math.random()*1000);
 					}
 				},200);
-				myhp=myhealthpoint(false,0);
-				asdasdf=setTimeout(function(){enemyattack(id,damage);},2000+Math.random()*1000);
 			}
 		}
 		$(".button-health-"+id).attr("onclick","drinkhealthpotion("+id+","+myhealthpoint(false,0)+")");
@@ -2303,25 +2320,23 @@ function attackdelay(id,sec) {
 		$(".button-attack-"+id).attr("value","Attack!");
 	}
 }
-function healthpotion(id) {
+function checkhealthbutton(id) {
 	if(items[7].owned!=0) {
 		$(".button-health-"+id).show();
 	}
 	else {
 		$(".button-health-"+id).hide();
 	}
-	setTimeout(function(){healthpotion(id);},100);
 }
-function skillbutton(id) {
+function checkskillbutton(id) {
 	if(skill!="none") {
 		$(".button-skill-"+id).show();
 	}
 	else {
 		$(".button-skill-"+id).hide();
 	}
-	setTimeout(function(){skillbutton(id);},100);
 }
-function potionsbutton(id) {
+function checkpotionsbutton(id) {
 	for(i=11;i<=18;i++) {
 		thepotionname=items[i];
 		if(thepotionname.owned>0) {
@@ -2331,12 +2346,12 @@ function potionsbutton(id) {
 			$(".button-potion-"+i+"-"+id).hide();
 		}
 	}
-	setTimeout(function(){potionsbutton(id);},100);
 }
 function drinkhealthpotion(id) {
 	if(items[7].owned!=0) {
 		if(enchant_countdown==1) { mindelay=6; } else { mindelay=7; }
 		items[7].owned-=1;
+		checkhealthbutton(id);
 		checkthings();
 		myhp=myhealthpoint(false,0);
 		myhp+=50;
@@ -2385,6 +2400,7 @@ function usetheskill(id) {
 function usepotion(pid,id) {
 	if(items[pid].owned>=1) {
 		items[pid].owned--;
+		checkpotionsbutton(id);
 		thepotionname=items[pid].name.replace(" potion","");
 		$(".button-potion-"+pid+"-"+id).val("["+items[pid].owned+"] "+thepotionname);
 		if(enchant_countdown==1) { mindelay=6; } else { mindelay=7; }
@@ -2445,11 +2461,12 @@ function potiondelay(id,sec) {
 		$("[class^=button-potion-]").attr("disabled","disabled");
 		$(".potion-countdown-"+id).html("("+sec+" sec)");
 		sec--;
-		setTimeout(function(){potiondelay(id,sec);},1000);
+		potiontimeout = setTimeout(function(){potiondelay(id,sec);},1000);
 	}
 	else {
 		$("[class^=button-potion-]").removeAttr("disabled");
 		$(".potion-countdown-"+id).html("");
+		potiontimeout = undefined;
 	}
 }
 function skilldelay(id,sec) {
@@ -2462,6 +2479,7 @@ function skilldelay(id,sec) {
 	else {
 		$(".button-skill-"+id).removeAttr("disabled");
 		$(".button-skill-"+id).attr("value","Use skill");
+		skilltimeout = undefined;
 	}
 }
 function healthdelay(id,sec) {
@@ -2474,8 +2492,40 @@ function healthdelay(id,sec) {
 	else {
 		$(".button-health-"+id).removeAttr("disabled");
 		$(".button-health-"+id).attr("value","["+items[7].owned+"] Drink health potion");
+		healthtimeout = undefined;
 	}
 }
+
+// stop all of the background timers for the current battle
+function stop_battle_timers() {
+	// it is expected that the enemy is either attacking or preparing to attack; put a stop to that immediately.
+	if (typeof enemy_attack_timer !== 'undefined') { clearTimeout(enemy_attack_timer); enemy_attack_timer = undefined; }
+
+		if(typeof attacktimeout !== 'undefined') {
+			clearTimeout(attacktimeout);
+			attacktimeout = undefined;
+		}
+		if(typeof healthtimeout !== 'undefined') {
+			clearTimeout(healthtimeout);
+			healthtimeout = undefined;
+		}
+		if(typeof skilltimeout !== 'undefined') {
+			clearTimeout(skilltimeout);
+			skilltimeout = undefined;
+		}
+		if(typeof invulnerabilitydelay !== 'undefined') {
+			clearTimeout(invulnerabilitydelay);
+			invulnerabilitydelay = undefined;
+		}
+}
+
+// perform cleanup at the end of the battle, regardless of outcome
+function battle_ended() {
+	// signal to others that the battle has ended
+	battlestop(true, true);
+	stop_battle_timers();
+}
+
 function myhealthpoint(set,health) { if(!set) { return myhp; } else { myhp=health; } }
 function enemyhealthpoint(set,health) { if(!set) { return enemyhp; } else { enemyhp=health; } }
 function enemyhealthpoint2(set,health) { if(!set) { return enemyhp2; } else { enemyhp2=health; } }
@@ -2489,7 +2539,7 @@ function theenemyname123(set,enemyname) { if(!set) { return theenemyname; } else
 function winbattle(param,id) {
 	myfinalhp=myhealthpoint(false,0);
 	myhealthpoint(true,99999999999999999999);
-	battlestop(true,true);
+	battle_ended();
 	if(param=="vs-thief") {
 		passthief=true;
 		closemessage();
@@ -2890,8 +2940,9 @@ function battlevsrats() {
 		powerhp();
 		hpdivide=Math.ceil(hp/4.5);
 		battle=makebattle(Math.round(Math.random()*100),"A Rat",hp-hpdivide,hp-hpdivide,"Their body",power-Math.ceil(power/2.5),"An annoying rat",11,power,hp,hp,currentsword,false,"vs-rat");
-		html="<div class=\"alert alert-battle-rats\"><b>Rat!</b><br>Kill it!!<br><br>"+battle+"</div>";
+		html="<div class=\"alert alert-battle-rats\"><b>Rat!</b><br>Kill it!!<br><br>"+battle.html+"</div>";
 		$("#otheralerts").append(html);
+		battle.init();
 		closemessage();
 		$(".alert-battle-rats").fadeIn("fast");
 	}
