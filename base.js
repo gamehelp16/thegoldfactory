@@ -75,7 +75,7 @@ function updateitems() {
 	$(".iron-mining-amount").html(ironmining);
 	$(".ibpt").html(ibpt);
     $(".skilllvl").html(skilllvl);
-    $(".thunder-damage").html(20+skilllvl*2);
+    $(".thunder-damage").html(20+skilllvl*5);
     $(".invuln-time").html((3+(skilllvl*3)));
     $(".upgrade-price").html(skilllvl*skilllvl*500+500);
 	$(".irontime").html(second2name(ibtime));
@@ -572,7 +572,7 @@ $(document).ready(function() {
 		}
 		else if(passgate&&buyfactory) {
 			closemessage();
-			makealert("buy-factory-new","The Gold Factory","Status: You are the boss! :o<br><br>Currently you have <span class=\"gold-mining\">"+goldmining+"</span> mining machines<br>Production: <span class=\"gbps\">"+gbps+"</span> goldbars / second<br><br><input type=\"button\" value=\"Buy 1 mining machine\" onclick=\"buyminingmachinegold(1)\" class=\"buy-1-mining-gold\"> (<span class=\"1-gold-cost\">"+goldprice+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 10 mining machines\" onclick=\"buyminingmachinegold(10)\" class=\"buy-10-mining-gold\"> (<span class=\"10-gold-cost\">"+goldprice*10+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 100 mining machines\" onclick=\"buyminingmachinegold(100)\" class=\"buy-100-mining-gold\"> (<span class=\"100-gold-cost\">"+goldprice*100+"</span> Iron Bars)",true)
+			makealert("buy-factory-new","The Gold Factory","Status: You are the boss! :o<br><br>Currently you have <span class=\"gold-mining\">"+goldmining+"</span> mining machines<br>Production: <span class=\"gbps\">"+gbps+"</span> goldbars / second<br><br><input type=\"button\" value=\"Buy 1 mining machine\" onclick=\"buyminingmachinegold(1)\" class=\"buy-1-mining-gold\"> (<span class=\"1-gold-cost\">"+goldprice+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 10 mining machines\" onclick=\"buyminingmachinegold(10)\" class=\"buy-10-mining-gold\"> (<span class=\"10-gold-cost\">"+goldprice*10+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 100 mining machines\" onclick=\"buyminingmachinegold(100)\" class=\"buy-100-mining-gold\"> (<span class=\"100-gold-cost\">"+goldprice*100+"</span> Iron Bars)<br><br>Tips: Buying 100 machines once is cheaper than buying 1 machine 100 times",true)
 		}
 	});
 	$(".theshop").click(function() {
@@ -614,7 +614,7 @@ $(document).ready(function() {
 		if(passworms) {
 			closemessage();
 			irontime=second2name(ibtime);
-			makealert("mining","Iron Mine","Iron mine allows you to get some iron bar(s) each hour / min / sec<br><br>Currently you have <span class=\"iron-mining-amount\">"+ironmining+"</span> mining machine(s)<br>Production: <span class=\"ibpt\">"+ibpt+"</span> iron bar(s) / <span class=\"irontime\">"+irontime+"</span><br><br><input type=\"button\" value=\"Buy 1 mining machine\" onclick=\"buyminingmachine(1)\" class=\"buy-1-mining\"> (<span class=\"1-iron-cost\">"+ironprice+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 10 mining machines\" onclick=\"buyminingmachine(10)\" class=\"buy-10-mining\"> (<span class=\"10-iron-cost\">"+ironprice*10+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 100 mining machines\" onclick=\"buyminingmachine(100)\" class=\"buy-100-mining\"> (<span class=\"100-iron-cost\">"+ironprice*100+"</span> Iron Bars)",true)
+			makealert("mining","Iron Mine","Iron mine allows you to get some iron bar(s) each hour / min / sec<br><br>Currently you have <span class=\"iron-mining-amount\">"+ironmining+"</span> mining machine(s)<br>Production: <span class=\"ibpt\">"+ibpt+"</span> iron bar(s) / <span class=\"irontime\">"+irontime+"</span><br><br><input type=\"button\" value=\"Buy 1 mining machine\" onclick=\"buyminingmachine(1)\" class=\"buy-1-mining\"> (<span class=\"1-iron-cost\">"+ironprice+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 10 mining machines\" onclick=\"buyminingmachine(10)\" class=\"buy-10-mining\"> (<span class=\"10-iron-cost\">"+ironprice*10+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 100 mining machines\" onclick=\"buyminingmachine(100)\" class=\"buy-100-mining\"> (<span class=\"100-iron-cost\">"+ironprice*100+"</span> Iron Bars)<br><br>Tips: Buying 100 machines once is cheaper than buying 1 machine 100 times",true)
 		}
 	});
 	$(".gate").click(function() {
@@ -1020,7 +1020,7 @@ function chooseskill(type) {
 }
 function upgradeskill() {
 	if(skill=="thunder") {
-		makealert("upgrade-skill","Upgrade Skill","Your skill is: Thunder Bolt<br>Skill level: <span class=\"skilllvl\">"+skilllvl+"</span> (<span class=\"thunder-damage\">"+(20+skilllvl*2)+"</span> damage)<br><br><input type=\"button\" value=\"Upgrade this skill\" onclick=\"doupgrade()\"> (<span class=\"upgrade-price\">"+(skilllvl*skilllvl*500+500)+"</span> gold bars)",true);
+		makealert("upgrade-skill","Upgrade Skill","Your skill is: Thunder Bolt<br>Skill level: <span class=\"skilllvl\">"+skilllvl+"</span> (<span class=\"thunder-damage\">"+(20+skilllvl*5)+"</span> damage)<br><br><input type=\"button\" value=\"Upgrade this skill\" onclick=\"doupgrade()\"> (<span class=\"upgrade-price\">"+(skilllvl*skilllvl*500+500)+"</span> gold bars)",true);
 	}
 	else {
 		makealert("upgrade-skill","Upgrade Skill","Your skill is: Invulnerability<br>Skill level: <span class=\"skilllvl\">"+skilllvl+"</span> (<span class=\"invuln-time\">"+(3+(skilllvl*3))+"</span> second(s))<br><br><input type=\"button\" value=\"Upgrade this skill\" onclick=\"doupgrade()\"> (<span class=\"upgrade-price\">"+(skilllvl*skilllvl*500+500)+"</span> gold bars)",true);
@@ -1192,7 +1192,7 @@ function showstorage() {
 }
 function changelog() {
 	closemessage();
-	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>18 December 2013:<br>- Some fixes thanks to <a href='https://github.com/Stevie-O'>Stevie-O</a><br><br>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
+	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>18 December 2013:<br>- Some fixes thanks to <a href='https://github.com/Stevie-O'>Stevie-O</a><br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1t5g6i/18_dec_2013_update_093_beta/'>Updates</a><br><br>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
 }
 function armorshop() {
 	closemessage();
@@ -1490,7 +1490,7 @@ computer="                                            _________________\n\
 		}
 		else if(passgate&&buyfactory) {
 			closemessage();
-			makealert("buy-factory-new","The Gold Factory","Status: You are the boss! :o<br><br>Currently you have <span class=\"gold-mining\">"+goldmining+"</span> mining machines<br>Production: <span class=\"gbps\">"+gbps+"</span> goldbars / second<br><br><input type=\"button\" value=\"Buy 1 mining machine\" onclick=\"buyminingmachinegold(1)\" class=\"buy-1-mining-gold\"> (<span class=\"1-gold-cost\">"+goldprice+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 10 mining machines\" onclick=\"buyminingmachinegold(10)\" class=\"buy-10-mining-gold\"> (<span class=\"10-gold-cost\">"+goldprice*10+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 100 mining machines\" onclick=\"buyminingmachinegold(100)\" class=\"buy-100-mining-gold\"> (<span class=\"100-gold-cost\">"+goldprice*100+"</span> Iron Bars)",true)
+			makealert("buy-factory-new","The Gold Factory","Status: You are the boss! :o<br><br>Currently you have <span class=\"gold-mining\">"+goldmining+"</span> mining machines<br>Production: <span class=\"gbps\">"+gbps+"</span> goldbars / second<br><br><input type=\"button\" value=\"Buy 1 mining machine\" onclick=\"buyminingmachinegold(1)\" class=\"buy-1-mining-gold\"> (<span class=\"1-gold-cost\">"+goldprice+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 10 mining machines\" onclick=\"buyminingmachinegold(10)\" class=\"buy-10-mining-gold\"> (<span class=\"10-gold-cost\">"+goldprice*10+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 100 mining machines\" onclick=\"buyminingmachinegold(100)\" class=\"buy-100-mining-gold\"> (<span class=\"100-gold-cost\">"+goldprice*100+"</span> Iron Bars)<br><br>Tips: Buying 100 machines once is cheaper than buying 1 machine 100 times",true)
 		}
 		$(".ylvis-the-fox").hide();
 	}
@@ -2370,7 +2370,7 @@ function usetheskill(id) {
 		if(enchant_countdown==1) { mindelay=18; } else { mindelay=20; }
 		if(skill=="thunder") {
 			enemyhp=enemyhealthpoint(false,0);
-			enemyhp-=20+skilllvl*2;
+			enemyhp-=20+skilllvl*5;
 			enemyhealthpoint(true,enemyhp);
 			if(enemyhealthpoint(false,0)<=0) {
 				enemyhealthpoint(true,0);
@@ -2659,6 +2659,12 @@ scroll='\n\
 		goldbar+=reward;
 		makealert("win-vs-rat","The rat died","You killed the rat, and your boss gave you "+reward+" gold bars!<br><br><input type='button' value=\"Kill more rats!\" onclick='battlevsrats()'>",true);
 	}
+	
+	if(param!="vs-rat"){
+		reward=enemyhealthpoint2(false,0);
+		goldbar+=reward;
+	}
+	
 }
 
 /* DIGGING SYSTEM */
