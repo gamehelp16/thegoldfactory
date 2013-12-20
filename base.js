@@ -26,24 +26,27 @@ function closemessage() {
 function updategold() {
 	$("#gold-bar").html(goldbar);
 	$("#iron-bar").html(ironbar);
-	if(ironmining<=50) {
+	
+	if(ironmining>0 && ironmining<=59) {
 		ibpt=ironmining;
 		ibtime=3600;
 	}
-	else if(ironmining>50&&ironmining<=100) {
-		ibpt=Math.ceil(ironmining/3);
+	else if(ironmining>59 && ironmining<=219) {
+		ibpt=Math.round((ironmining-59)/2.3);
+		if(ibpt==0) {
+			ibpt=1;
+		}
 		ibtime=60;
 	}
-	else if(ironmining>100&&ironmining<=500) {
-		ibpt=ironmining;
-		ibtime=60;
-	}
-	else if(ironmining>500&&ironmining<=1000) {
-		ibpt=ironmining-500;
+	else if(ironmining>219 && ironmining<4717) {
+		ibpt=Math.round((ironmining-219)/4.5);
+		if(ibpt==0) {
+			ibpt=1;
+		}
 		ibtime=1;
 	}
-	else if(ironmining>1000) {
-		ibpt=500;
+	else if(ironmining>=4717) {
+		ibpt=1000;
 		ibtime=1;
 	}
 	
@@ -450,7 +453,7 @@ function enchantsword(type) {
 }
 $(document).ready(function() {
 
-	$('.leversion').html("0.9.3 (Beta)");
+	$('.leversion').html("0.9.4 (Beta)");
 	closemessage();
 	makealert("beta-notice","Beta version notice","As you can see on the left bottom corner of the page, this game is still in beta version (although it is beta but the game is finished)<br><br>So, please let me know if there are some bugs or not working features via <a href=\"http://reddit.com/r/thegoldfactory\">reddit</a> (especially for the saving feature)<br><br>Plus, when i'm typing this, I haven't completed the game without cheating ;) So, the game may be impossible to win. Please let me know if the game is really impossible to win<br><br>Enjoy the game! :D",true);
 
@@ -488,6 +491,8 @@ $(document).ready(function() {
 	items.push({"name":"emerald sword","price":0,"owned":0,"plural":"s","showstorage":false}); //22
 	items.push({"name":"music disc","price":0,"owned":0,"plural":"s","showstorage":true}); //23
 	items.push({"name":"glasses","price":0,"owned":0,"plural":"s","showstorage":false}); //24
+	items.push({"name":"magical iron melter","price":0,"owned":0,"plural":"s","showstorage":true});
+	items.push({"name":"shuriken","price":0,"owned":0,"plural":"s","showstorage":true}); //26
 	
 	swords=[];
 	swords.push({"name":"wooden sword","power":6});
@@ -690,13 +695,37 @@ $(document).ready(function() {
 		}
 	});
 	$(".castle").click(function() {
+		
 		if(passgate) {
 			entercastle();
 		}
+		
+		/* 
+			For future update, I guess:
+		
+			if(passgate && !beatboss) {
+				entercastle();
+			}
+			else if(passgate && beatboss) {
+				makealert("castle","Castle","You are at the castle entrance<br><br><div class=\"castle-steps\"><span class=\"castle-entrance\">Castle Entrance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-hall grey\">Castle Hall</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-room grey\">King's Room</span></div><br><br>",true);
+			}
+			
+		*/	
+			
 	});
 	$(".laboratory").click(function() {
 		if(passgate) {
+		
 			makealert("laboratory","Laboratory","<div style='max-height:300px; overflow-y:auto;'><del title=\"No, i'm not CrazyRussianHacker\">What's up everybody, welcome back to my laboratory, safety is number 1 priority</del><br>In this laboratory, you can make potions from resources you have (<a href='potions.html' target='_blank'>Potions guide</a>)<br><br><input type=\"button\" value=\"Put\" onclick=\"putitem()\">&nbsp;<input type='text' id='quantity' placeholder='0' size='1'>&nbsp;<select id='itemlist'></select><br>Item(s) going to be mixed:<br><div id='goingtobemixed'></div><br><input type=\"button\" value=\"Mix!\" onclick=\"mixitems()\"></div>",true);
+		
+			/*
+		
+				For future update, I guess
+			
+				makealert("laboratory","Laboratory","<div style='max-height:300px; overflow-y:auto;'><del title=\"No, i'm not CrazyRussianHacker\">What's up everybody, welcome back to my laboratory, safety is number 1 priority</del><br>In this laboratory, you can make potions and items from resources you have (<a href='lab.html' target='_blank'>Laboratory guide</a>)<br><br><input type=\"button\" value=\"Put\" onclick=\"putitem()\">&nbsp;<input type='text' id='quantity' placeholder='0' size='1'>&nbsp;<select id='itemlist'></select><br>Item(s) going to be mixed:<br><div id='goingtobemixed'></div><br><input type=\"button\" value=\"Mix!\" onclick=\"mixitems()\"></div>",true);
+				
+			*/	
+				
 			thecauldron("make",0,0);
 			updateitemlist();
 		}
@@ -865,7 +894,7 @@ story="\n\
 			makealert("boss-conversation","Someone","Someone is standing there<br><br><pre class='boss-story'>"+story+"</pre>",true);
 		}
 		else {
-			makealert("chest-from-boss","Chest","<br><input type='button' onclick='chest()' value='Interact with chest'>",true);
+			makealert("chest-from-boss","Chest","<br><input type='button' onclick='openthechestfromsomeone()' value='Interact with chest'>",true);
 		}
 	});
 	
@@ -1192,7 +1221,7 @@ function showstorage() {
 }
 function changelog() {
 	closemessage();
-	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>18 December 2013:<br>- Some fixes thanks to <a href='https://github.com/Stevie-O'>Stevie-O</a><br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1t5g6i/18_dec_2013_update_093_beta/'>Updates</a><br><br>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
+	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>20 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1tbmnk/20_dec_2013_update_version_094_beta/' target='_blank'>Updates</a><br><br>18 December 2013:<br>- Some fixes thanks to <a href='https://github.com/Stevie-O' target='_blank'>Stevie-O</a><br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1t5g6i/18_dec_2013_update_093_beta/' target='_blank'>Updates</a><br><br>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
 }
 function armorshop() {
 	closemessage();
@@ -1665,7 +1694,7 @@ PS: He heals 3 HP each time he attacks you and he also absorb some damage from y
 		$(".alert-boss-fight").fadeIn("fast");
 	}
 }
-function chest() {
+function openthechestfromsomeone() {
 	if(cheststep==0) {
 		closemessage();
 		makealert("chest-locked","Locked","The chest is locked, you need a key to open it<br><br><input type='button' onclick='openthechest()' value='Open the chest'>",true);
@@ -1948,7 +1977,7 @@ function dosave(param) {
 
 jQuery.fn.shake = function() {
     this.each(function(i) {
-        for (var x = 1; x <= 3; x++) {
+        for (var x = 1; x <= 2; x++) {
             $(this).animate({ left: 225 }, 10).animate({ left: 250 }, 50).animate({ left: 225 }, 10).animate({ left: 250 }, 50);
         }
     });
@@ -2215,6 +2244,15 @@ function enemyattack(id,damage) {
 							$(".enemy-"+id+"-hp").html(enemyhp);
 							enemyconfused(true,false);
 							lagipusing=true;
+							
+							if(enemyhealthpoint(false,0)<=0) {
+								thenewhp=enemyhealthpoint(true,0);
+								$(".enemy-"+id+"-hp").html("0");
+								$(".button-attack-"+id).attr("disabled","disabled");
+								setTimeout(function(){winbattle(theparam(false,0),id);},0);
+								return;
+							}
+							
 						}
 						else {
 							myhp=myhealthpoint(false,0);
@@ -2649,7 +2687,7 @@ scroll='\n\
 		$(".buttons-"+id).hide();
 		$(".enemy-"+id+"-hp").html('1');
 		setTimeout(function(){
-			makealert("boss-win","Almost!","<marquee direction=\"up\" scrollamount=\"2\" scrolldelay=\"1\" onmouseover=\"this.stop()\" onmouseout=\"this.start();\" behavior=\"slide\">You (almost) killed the guy<br>but he successfully recover 1 hp before dying<br><br><br><br><br><br>But....<br><br><br><br>You have learned something.......<br><br><br><br><br><br><br><br>You can't solve a problem by doing a revenge......<br><br><br><br><br><br><br><br>The best way is to talk to the guy himself and forgive him......<br><br><br><br><br><br><br><br>Since killing won't solve the problem......<br><br><br><br><br><br><br><br>You have talked to him and forgive him<br><br><br><br>Everything is normal now<br><br><br><br>And now he wants you to teleport back to the real world.............<br><br><br><br>But, you finally choose to live in this 'weird' world<br><br><br><br>You have done so many things in this world<br><br><br><br>and you learned to love this world<br><br><br><br>and you don't even want to go back<br><br><br><br><br><br><br><br>Oh, btw he has a chest for you<br><br><br><br><input type='button' onclick='chest()' value='Open the chest'><br><br></marquee>",true);
+			makealert("boss-win","Almost!","<marquee direction=\"up\" scrollamount=\"2\" scrolldelay=\"1\" onmouseover=\"this.stop()\" onmouseout=\"this.start();\" behavior=\"slide\">You (almost) killed the guy<br>but he successfully recover 1 hp before dying<br><br><br><br><br><br>But....<br><br><br><br>You have learned something.......<br><br><br><br><br><br><br><br>You can't solve a problem by doing a revenge......<br><br><br><br><br><br><br><br>The best way is to talk to the guy himself and forgive him......<br><br><br><br><br><br><br><br>Since killing won't solve the problem......<br><br><br><br><br><br><br><br>You have talked to him and forgive him<br><br><br><br>Everything is normal now<br><br><br><br>And now he wants you to teleport back to the real world.............<br><br><br><br>But, you finally choose to live in this 'weird' world<br><br><br><br>You have done so many things in this world<br><br><br><br>and you learned to love this world<br><br><br><br>and you don't even want to go back<br><br><br><br><br><br><br><br>Oh, btw he has a chest for you<br><br><br><br><input type='button' onclick='openthechestfromsomeone()' value='Open the chest'><br><br></marquee>",true);
 			$(".button-close-window-boss-win").hide();
 		},2000);
 	}
@@ -2895,6 +2933,19 @@ function mixitems() {
 		
 		items[20].owned++;
 	}
+	else if(cldr[0]!=null && cldr[1]!=null && cldr[2]!=null && cldr[0].id==10 && cldr[0].quantity==1 && cldr[1].id==18 && cldr[1].quantity==1 && cldr[2].id=="ironbar" && cldr[2].quantity==1000) {
+		if(items[25].owned==0) {
+			alert('You made a magical iron melter!\nBut you need a place to put it, hmmm....');
+			items[25].owned+=1;
+		}
+		else {
+			alert('You can\'t make more than one magical iron multiplier');
+		}
+	}
+	else if(cldr[0]!=null && cldr[0].id=="ironbar" && cldr[0].quantity%10==0) {
+		alert('You made '+cldr[0].quantity/10+' shuriken(s)!');
+		items[26].owned+=cldr[0].quantity/10;
+	}
 	else {
 		alert('You made nothing, please make sure you put the items in order!');
 	}
@@ -2933,8 +2984,11 @@ function ciphercode() {
 	else if(cipherstep==3) {
 		codetocipher="VGhlIHBsYW50IGlzIGZhbW91cyBiZWNhdXNlIG9mIHR<br>oZSBhYmlsaXR5IHRvIGN1cmUgc29tZSBkaXNlYXNlcw==";
 	}
+	else if(cipherstep==4) {
+		codetocipher="towiiag g se   rir,oaoan   ft ofo srtod tddyi ot mdy lugelelmwon foemsthiuaa ttclntclga  bhhs";
+	}
 
-	if(cipherstep<4) {
+	if(cipherstep<5) {
 		makealert("help-ciphering","Cipher some codes","Your boss loves ciphering codes, but he is busy. If you can help him, he promise to give you bonus gold bars as a reward.<br><br>Code #"+(cipherstep+1)+":<br>"+codetocipher+"<br><input type='text' id='cipherthecodeanswer'><br><br><input type='button' value='Submit' onclick='checkchipher()'>",true);
 	}
 	else {
@@ -3001,6 +3055,17 @@ function checkchipher() {
 			goldbar+=2500;
 			closemessage();
 			alert("Correct! You get 2500 gold bars!"); 
+		}
+		else {
+			alert('Wrong!');
+		}
+	}
+	else if(cipherstep==4) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="the gold factory was built long time ago, and it is the most famous gold factory in the world") {
+			cipherstep++;
+			goldbar+=7500;
+			closemessage();
+			alert("Correct! Because this one is a hard one, you get 7500 gold bars!"); 
 		}
 		else {
 			alert('Wrong!');
