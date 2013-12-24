@@ -453,7 +453,7 @@ function enchantsword(type) {
 }
 $(document).ready(function() {
 
-	$('.leversion').html("0.9.4 (Beta)");
+	$('.leversion').html("0.9.4.1 (Beta)");
 	closemessage();
 	makealert("beta-notice","Beta version notice","As you can see on the left bottom corner of the page, this game is still in beta version (although it is beta but the game is finished)<br><br>So, please let me know if there are some bugs or not working features via <a href=\"http://reddit.com/r/thegoldfactory\">reddit</a> (especially for the saving feature)<br><br>Plus, when i'm typing this, I haven't completed the game without cheating ;) So, the game may be impossible to win. Please let me know if the game is really impossible to win<br><br>Enjoy the game! :D",true);
 
@@ -739,7 +739,7 @@ $(document).ready(function() {
 		if(reachedclouds) {
 		}
 		else if(passgate&&!hasairplane) {
-			makealert("buy-airplane","Airplane","This airplane is for sale, you can buy it<br><br><input type=\"button\" value=\"Buy\" onclick=\"buyairplane()\"> the airplane (9,000,000 iron bars)",true);
+			makealert("buy-airplane","Airplane","This airplane is for sale, you can buy it<br><br><input type=\"button\" value=\"Buy\" onclick=\"buyairplane()\"> the airplane (5,000,000 iron bars)",true);
 		}
 		else if(passgate&&hasairplane&&airplanecountdown==999999999) {
 			makealert("fly","Fly!!!","Are you ready to fly?<br><br><input type=\"button\" value=\"Fly now!!!\" onclick=\"fly()\">",true);
@@ -880,12 +880,12 @@ computer="                                            _________________\n\
 story="\n\
 \n\
        _\n\
-   .â€¢'   'â€¢.    \"Who is standing there?               O\n\
+   .&bull;'   '&bull;.    \"Who is standing there?               O\n\
   /         \\    Hmmmm..... That's weird :/\"         /|\\\n\
  |           |                                        |\n\
  |           |                                       / \\\n\
   \\         /    <input type='button' value='Next >' onclick='guy(1)'>                              \n\
-   'â€¢.   .â€¢'\n\
+   '&bull;.   .&bull;'\n\
      /   \\\n\
     / | | \\\n\
    / /| |\\ \\\n\
@@ -1127,8 +1127,8 @@ function castlegotoking(myfinalhp) {
 	$(".alert-castle-king").fadeIn("fast");
 }
 function buyairplane() {
-	if(ironbar>=9000000) {
-		ironbar-=9000000;
+	if(ironbar>=5000000) {
+		ironbar-=5000000;
 		checkthings();
 		hasairplane=true;
 		makealert("get-airplane","You have an airplane now","The airplane is yours now</pre>",true);
@@ -1221,7 +1221,7 @@ function showstorage() {
 }
 function changelog() {
 	closemessage();
-	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>20 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1tbmnk/20_dec_2013_update_version_094_beta/' target='_blank'>Updates</a><br><br>18 December 2013:<br>- Some fixes thanks to <a href='https://github.com/Stevie-O' target='_blank'>Stevie-O</a><br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1t5g6i/18_dec_2013_update_093_beta/' target='_blank'>Updates</a><br><br>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
+	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>24 December 2013:<br>- Airplane price is now 5 million iron bars instead of 9 million! <br><br>20 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1tbmnk/20_dec_2013_update_version_094_beta/' target='_blank'>Updates</a><br><br>18 December 2013:<br>- Some fixes thanks to <a href='https://github.com/Stevie-O' target='_blank'>Stevie-O</a><br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1t5g6i/18_dec_2013_update_093_beta/' target='_blank'>Updates</a><br><br>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
 }
 function armorshop() {
 	closemessage();
@@ -1620,12 +1620,12 @@ function guy(step) {
 	if(step==1) {
 story="\n\
        _\n\
-   .â€¢'   'â€¢.    \"It seems that I have ever seen       O\n\
+   .&bull;'   '&bull;.    \"It seems that I have ever seen       O\n\
   /         \\    that guy before, hmmmm....\"         /|\\\n\
  |           |                                        |\n\
  |           |                                       / \\\n\
   \\         /    <input type='button' value='Next >' onclick='guy(2)'>                              \n\
-   'â€¢.   .â€¢'\n\
+   '&bull;.   .&bull;'\n\
      /   \\\n\
     / | | \\\n\
    / /| |\\ \\\n\
@@ -1636,12 +1636,12 @@ story="\n\
 	else if(step==2) {
 story="\n\
        _\n\
-   .â€¢'   'â€¢.    \"Oh, yes, I know him!                 O\n\
+   .&bull;'   '&bull;.    \"Oh, yes, I know him!                 O\n\
   /         \\    he is the one who brought me        /|\\\n\
  |           |    to this weird world >:C\"            |\n\
  |           |                                       / \\\n\
   \\         /    <input type='button' value='Next >' onclick='guy(3)'>                              \n\
-   'â€¢.   .â€¢'\n\
+   '&bull;.   .&bull;'\n\
      /   \\\n\
     / | | \\\n\
    / /| |\\ \\\n\
@@ -1652,12 +1652,12 @@ story="\n\
 	else if(step==3) {
 story="\n\
        _\n\
-   .â€¢'   'â€¢.    \"I must kill him!\"                    O\n\
+   .&bull;'   '&bull;.    \"I must kill him!\"                    O\n\
   /         \\                                        /|\\\n\
  |           |                                        |\n\
  |           |                                       / \\\n\
   \\         /    <input type='button' value='Next >' onclick='guy(4)'>                              \n\
-   'â€¢.   .â€¢'\n\
+   '&bull;.   .&bull;'\n\
      /   \\\n\
     / | | \\\n\
    / /| |\\ \\\n\
@@ -1668,12 +1668,12 @@ story="\n\
 	else if(step==4) {
 story="\n\
        _\n\
-   .â€¢'   'â€¢.                    \"No, you can't kill   O\n\
+   .&bull;'   '&bull;.                    \"No, you can't kill   O\n\
   /         \\                   me, you idiot >:(\"   /|\\\n\
  |           |                                        |\n\
  |           |                                       / \\\n\
   \\         /    <input type='button' value='Fight!' onclick='guy(5)'>                              \n\
-   'â€¢.   .â€¢'\n\
+   '&bull;.   .&bull;'\n\
      /   \\\n\
     / | | \\\n\
    / /| |\\ \\\n\
