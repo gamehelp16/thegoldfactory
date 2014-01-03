@@ -453,9 +453,9 @@ function enchantsword(type) {
 }
 $(document).ready(function() {
 
-	$('.leversion').html("0.9.4.1 (Beta)");
-	closemessage();
-	makealert("beta-notice","Beta version notice","As you can see on the left bottom corner of the page, this game is still in beta version (although it is beta but the game is finished)<br><br>So, please let me know if there are some bugs or not working features via <a href=\"http://reddit.com/r/thegoldfactory\">reddit</a> (especially for the saving feature)<br><br>Plus, when i'm typing this, I haven't completed the game without cheating ;) So, the game may be impossible to win. Please let me know if the game is really impossible to win<br><br>Enjoy the game! :D",true);
+	$('.leversion').html("1.0");
+	//closemessage();
+	//makealert("beta-notice","Beta version notice","As you can see on the left bottom corner of the page, this game is still in beta version (although it is beta but the game is finished)<br><br>So, please let me know if there are some bugs or not working features via <a href=\"http://reddit.com/r/thegoldfactory\">reddit</a> (especially for the saving feature)<br><br>Plus, when i'm typing this, I haven't completed the game without cheating ;) So, the game may be impossible to win. Please let me know if the game is really impossible to win<br><br>Enjoy the game! :D",true);
 
 	goldbar=0; //0
 	ironbar=0; //0
@@ -548,6 +548,7 @@ $(document).ready(function() {
 	gethole=false;
 	win=false;
 	hasportal=false;
+	activatemachine=false;
 	
 	if(localStorage.thegoldfactorygamesave) {
 		dosave('loadlocalstorage');
@@ -829,7 +830,7 @@ chestascii='\n\
 		*/
 		
 	});
-	$(".dig-sign").click(function() {
+	$(".sign-dig").click(function() {
 		makealert("sign-underground-alert","A sign","\"Nothing more to dig, this is the end. But maybe there will be updates in the future\"",true);
 	});
 	$(".theportal").click(function() {
@@ -897,6 +898,14 @@ story="\n\
 			makealert("chest-from-boss","Chest","<br><input type='button' onclick='openthechestfromsomeone()' value='Interact with chest'>",true);
 		}
 	});
+	$(".old-machine").click(function() {
+		if(activatemachine) {
+			makealert("old-machine","An old machine","The machine a hole and a text 'Insert some gold bars here', you don't really know what this machine does, but maybe it will be useful<br><br><input type='button' value='Put 10 gold bars inside the machine' onclick='givemachinegoldbar(10)'><br><input type='button' value='Put 100 gold bars inside the machine' onclick='givemachinegoldbar(100)'><br><input type='button' value='Put 1000 gold bars inside the machine' onclick='givemachinegoldbar(1000)'><br><input type='button' value='Put 10000 gold bars inside the machine' onclick='givemachinegoldbar(10000)'><br><input type='button' value='Put 100000 gold bars inside the machine' onclick='givemachinegoldbar(100000)'><br>",true);
+		}
+		else {
+			makealert("old-machine","An old machine","This old machine seems to need some fuel to work, maybe a lava bucket can be the fuel.<br><br><input type='button' value='Pour a bucket of lava to the machine' onclick='givelavabuckettothemachine()'>",true);
+		}
+	});
 	
 	a=setInterval(function() {
 		ironbar+=ibpt;
@@ -929,6 +938,27 @@ function makealert(id,title,text,show) {
 		closemessage();
 		$(".alert-"+id).fadeIn("fast");
 		$(".modal").fadeIn("fast");
+	}
+}
+function givemachinegoldbar(howmany) {
+	if(howmany%10==0) {
+		goldbar-=howmany;
+		howmany/=10;
+		ironbar+=howmany;
+		checkthings();
+		alert('The machine gives you '+howmany+' iron bar(s)!');
+	}
+}
+function givelavabuckettothemachine() {
+	if(!activatemachine) {
+		if(items[10].owned>=1) {
+			items[10].owned-=1;
+			activatemachine=true;
+			makealert("lava-success","The machine worked!","You successfully make the machine work!",true);
+		}
+		else {
+			alert('You have no lava bucket!');
+		}
 	}
 }
 function clickcloud() {
@@ -1221,7 +1251,7 @@ function showstorage() {
 }
 function changelog() {
 	closemessage();
-	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>24 December 2013:<br>- Airplane price is now 5 million iron bars instead of 9 million! <br><br>20 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1tbmnk/20_dec_2013_update_version_094_beta/' target='_blank'>Updates</a><br><br>18 December 2013:<br>- Some fixes thanks to <a href='https://github.com/Stevie-O' target='_blank'>Stevie-O</a><br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1t5g6i/18_dec_2013_update_093_beta/' target='_blank'>Updates</a><br><br>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
+	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>03 January 2014<br>- Version 1.0 released! (finally :D)<br>- There is something new in the end of 'the digging'<br><br>24 December 2013:<br>- Airplane price is now 5 million iron bars instead of 9 million! <br><br>20 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1tbmnk/20_dec_2013_update_version_094_beta/' target='_blank'>Updates</a><br><br>18 December 2013:<br>- Some fixes thanks to <a href='https://github.com/Stevie-O' target='_blank'>Stevie-O</a><br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1t5g6i/18_dec_2013_update_093_beta/' target='_blank'>Updates</a><br><br>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
 }
 function armorshop() {
 	closemessage();
@@ -1778,7 +1808,7 @@ function save() {
 
 function dosave(param) {
 	if(param=='text') {
-		prompt("Save the code somewhere safe!", goldbar+"|"+ironbar+"|"+gbps+"|"+goldmining+"|"+ibpt+"|"+ibtime+"|"+ironmining+"|"+items[0].owned+"|"+items[1].owned+"|"+items[2].owned+"|"+items[3].owned+"|"+items[4].owned+"|"+items[5].owned+"|"+items[6].owned+"|"+items[7].owned+"|"+items[8].owned+"|"+items[9].owned+"|"+items[10].owned+"|"+items[11].owned+"|"+items[12].owned+"|"+items[13].owned+"|"+items[14].owned+"|"+items[15].owned+"|"+items[16].owned+"|"+items[17].owned+"|"+items[18].owned+"|"+items[19].owned+"|"+items[20].owned+"|"+items[21].owned+"|"+items[22].owned+"|"+items[23].owned+"|"+items[24].owned+"|"+enchant_attack+"|"+enchant_defense+"|"+enchant_countdown+"|"+enchant_life+"|"+helmet+"|"+chestplate+"|"+pants+"|"+boots+"|"+theusername+"|"+theuserdesc+"|"+cheststep+"|"+searchtimes+"|"+shovelbroken+"|"+cursor+"|"+pizzaeaten+"|"+poisoned+"|"+chestunderground+"|"+talk+"|"+wob+"|"+buyfactory+"|"+skill+"|"+skilllvl+"|"+additionalattack+"|"+clickcloudcount+"|"+openchestcount+"|"+candybox+"|"+hpactive+"|"+airplanecountdown+"|"+digcountdown+"|"+digstep+"|"+currentsword+"|"+passthief+"|"+passworms+"|"+passgate+"|"+unlockenchant+"|"+unlockchest+"|"+beatboss+"|"+hasairplane+"|"+reachedclouds+"|"+defeatinvisiblebot+"|"+gethole+"|"+win+"|"+hasportal+"|"+cipherstep);
+		prompt("Save the code somewhere safe!", goldbar+"|"+ironbar+"|"+gbps+"|"+goldmining+"|"+ibpt+"|"+ibtime+"|"+ironmining+"|"+items[0].owned+"|"+items[1].owned+"|"+items[2].owned+"|"+items[3].owned+"|"+items[4].owned+"|"+items[5].owned+"|"+items[6].owned+"|"+items[7].owned+"|"+items[8].owned+"|"+items[9].owned+"|"+items[10].owned+"|"+items[11].owned+"|"+items[12].owned+"|"+items[13].owned+"|"+items[14].owned+"|"+items[15].owned+"|"+items[16].owned+"|"+items[17].owned+"|"+items[18].owned+"|"+items[19].owned+"|"+items[20].owned+"|"+items[21].owned+"|"+items[22].owned+"|"+items[23].owned+"|"+items[24].owned+"|"+enchant_attack+"|"+enchant_defense+"|"+enchant_countdown+"|"+enchant_life+"|"+helmet+"|"+chestplate+"|"+pants+"|"+boots+"|"+theusername+"|"+theuserdesc+"|"+cheststep+"|"+searchtimes+"|"+shovelbroken+"|"+cursor+"|"+pizzaeaten+"|"+poisoned+"|"+chestunderground+"|"+talk+"|"+wob+"|"+buyfactory+"|"+skill+"|"+skilllvl+"|"+additionalattack+"|"+clickcloudcount+"|"+openchestcount+"|"+candybox+"|"+hpactive+"|"+airplanecountdown+"|"+digcountdown+"|"+digstep+"|"+currentsword+"|"+passthief+"|"+passworms+"|"+passgate+"|"+unlockenchant+"|"+unlockchest+"|"+beatboss+"|"+hasairplane+"|"+reachedclouds+"|"+defeatinvisiblebot+"|"+gethole+"|"+win+"|"+hasportal+"|"+cipherstep+"|"+activatemachine);
 	}
 	else if(param=='load') {
 		savecode=prompt("Please enter the save code", "Enter the code here");
@@ -1864,12 +1894,8 @@ function dosave(param) {
 		gethole=(savecode[72] === "true");
 		win=(savecode[73] === "true");
 		hasportal=(savecode[74] === "true");
-		if(savecode.length==76) {
-			cipherstep=parseInt(savecode[75]);
-		}
-		else {
-			cipherstep=0;
-		}
+		if(savecode.length>=76) { cipherstep=parseInt(savecode[75]); } else { cipherstep=0; }
+		if(savecode.length==77) { activatemachine=(savecode[76] === "true"); } else { activatemachine=0; }
 		
 		checkthings();
 		alert('Because of some issues, you should save your game and refresh the page for changes to apply, sorry :(');
@@ -1954,12 +1980,8 @@ function dosave(param) {
 		gethole=(savecode[72] === "true");
 		win=(savecode[73] === "true");
 		hasportal=(savecode[74] === "true");
-		if(savecode.length==76) {
-			cipherstep=parseInt(savecode[75]);
-		}
-		else {
-			cipherstep=0;
-		}
+		if(savecode.length>=76) { cipherstep=parseInt(savecode[75]); } else { cipherstep=0; }
+		if(savecode.length==77) { activatemachine=(savecode[76] === "true"); } else { activatemachine=0; }
 		
 		checkthings();
 		
@@ -1970,7 +1992,7 @@ function dosave(param) {
 			alert('Oh snap! It seems that HTML5 Local Storage is not supported on your browser. I recommend you to upgrade your browser or use the text saving method');
 		}
 		
-		localStorage.thegoldfactorygamesave=goldbar+"|"+ironbar+"|"+gbps+"|"+goldmining+"|"+ibpt+"|"+ibtime+"|"+ironmining+"|"+items[0].owned+"|"+items[1].owned+"|"+items[2].owned+"|"+items[3].owned+"|"+items[4].owned+"|"+items[5].owned+"|"+items[6].owned+"|"+items[7].owned+"|"+items[8].owned+"|"+items[9].owned+"|"+items[10].owned+"|"+items[11].owned+"|"+items[12].owned+"|"+items[13].owned+"|"+items[14].owned+"|"+items[15].owned+"|"+items[16].owned+"|"+items[17].owned+"|"+items[18].owned+"|"+items[19].owned+"|"+items[20].owned+"|"+items[21].owned+"|"+items[22].owned+"|"+items[23].owned+"|"+items[24].owned+"|"+enchant_attack+"|"+enchant_defense+"|"+enchant_countdown+"|"+enchant_life+"|"+helmet+"|"+chestplate+"|"+pants+"|"+boots+"|"+theusername+"|"+theuserdesc+"|"+cheststep+"|"+searchtimes+"|"+shovelbroken+"|"+cursor+"|"+pizzaeaten+"|"+poisoned+"|"+chestunderground+"|"+talk+"|"+wob+"|"+buyfactory+"|"+skill+"|"+skilllvl+"|"+additionalattack+"|"+clickcloudcount+"|"+openchestcount+"|"+candybox+"|"+hpactive+"|"+airplanecountdown+"|"+digcountdown+"|"+digstep+"|"+currentsword+"|"+passthief+"|"+passworms+"|"+passgate+"|"+unlockenchant+"|"+unlockchest+"|"+beatboss+"|"+hasairplane+"|"+reachedclouds+"|"+defeatinvisiblebot+"|"+gethole+"|"+win+"|"+hasportal+"|"+cipherstep;
+		localStorage.thegoldfactorygamesave=goldbar+"|"+ironbar+"|"+gbps+"|"+goldmining+"|"+ibpt+"|"+ibtime+"|"+ironmining+"|"+items[0].owned+"|"+items[1].owned+"|"+items[2].owned+"|"+items[3].owned+"|"+items[4].owned+"|"+items[5].owned+"|"+items[6].owned+"|"+items[7].owned+"|"+items[8].owned+"|"+items[9].owned+"|"+items[10].owned+"|"+items[11].owned+"|"+items[12].owned+"|"+items[13].owned+"|"+items[14].owned+"|"+items[15].owned+"|"+items[16].owned+"|"+items[17].owned+"|"+items[18].owned+"|"+items[19].owned+"|"+items[20].owned+"|"+items[21].owned+"|"+items[22].owned+"|"+items[23].owned+"|"+items[24].owned+"|"+enchant_attack+"|"+enchant_defense+"|"+enchant_countdown+"|"+enchant_life+"|"+helmet+"|"+chestplate+"|"+pants+"|"+boots+"|"+theusername+"|"+theuserdesc+"|"+cheststep+"|"+searchtimes+"|"+shovelbroken+"|"+cursor+"|"+pizzaeaten+"|"+poisoned+"|"+chestunderground+"|"+talk+"|"+wob+"|"+buyfactory+"|"+skill+"|"+skilllvl+"|"+additionalattack+"|"+clickcloudcount+"|"+openchestcount+"|"+candybox+"|"+hpactive+"|"+airplanecountdown+"|"+digcountdown+"|"+digstep+"|"+currentsword+"|"+passthief+"|"+passworms+"|"+passgate+"|"+unlockenchant+"|"+unlockchest+"|"+beatboss+"|"+hasairplane+"|"+reachedclouds+"|"+defeatinvisiblebot+"|"+gethole+"|"+win+"|"+hasportal+"|"+cipherstep+"|"+activatemachine;
 		alert('Your game has been saved!');
 	}
 }
