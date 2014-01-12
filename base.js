@@ -78,13 +78,13 @@ function updateitems() {
 	$(".iron-mining-amount").html(ironmining);
 	$(".ibpt").html(ibpt);
     $(".skilllvl").html(skilllvl);
-    $(".thunder-damage").html(20+skilllvl*5);
+    $(".thunder-damage").html(20+skilllvl*7);
     $(".invuln-time").html((3+(skilllvl*3)));
     $(".upgrade-price").html(skilllvl*skilllvl*500+500);
 	$(".irontime").html(second2name(ibtime));
 	$(".gold-mining").html(goldmining);
 	$(".gbps").html(gbps);
-	ironprice=10+Math.floor(ironmining*ironmining/100);
+	ironprice=10+Math.floor(ironmining*ironmining/150);
 	$(".1-iron-cost").html(ironprice);
 	$(".10-iron-cost").html(ironprice*10);
 	$(".100-iron-cost").html(ironprice*100);
@@ -453,7 +453,7 @@ function enchantsword(type) {
 }
 $(document).ready(function() {
 
-	$('.leversion').html("1.0.1");
+	$('.leversion').html("1.1");
 	//closemessage();
 	//makealert("beta-notice","Beta version notice","As you can see on the left bottom corner of the page, this game is still in beta version (although it is beta but the game is finished)<br><br>So, please let me know if there are some bugs or not working features via <a href=\"http://reddit.com/r/thegoldfactory\">reddit</a> (especially for the saving feature)<br><br>Plus, when i'm typing this, I haven't completed the game without cheating ;) So, the game may be impossible to win. Please let me know if the game is really impossible to win<br><br>Enjoy the game! :D",true);
 
@@ -491,8 +491,6 @@ $(document).ready(function() {
 	items.push({"name":"emerald sword","price":0,"owned":0,"plural":"s","showstorage":false}); //22
 	items.push({"name":"music disc","price":0,"owned":0,"plural":"s","showstorage":true}); //23
 	items.push({"name":"glasses","price":0,"owned":0,"plural":"s","showstorage":false}); //24
-	items.push({"name":"magical iron melter","price":0,"owned":0,"plural":"s","showstorage":true});
-	items.push({"name":"shuriken","price":0,"owned":0,"plural":"s","showstorage":true}); //26
 	
 	swords=[];
 	swords.push({"name":"wooden sword","power":6});
@@ -991,6 +989,7 @@ function powerhp() {
 function testskill() {
 	if(goldbar>=20) {
 		goldbar-=20;
+		checkthings();
 		powerhp();
 		hpdivide10=Math.ceil(hp/10);
 		battle=makebattle(Math.round(Math.random()*100),"Training Robot",hp+hpdivide10,hp+hpdivide10,"Short ranged laser!",power+Math.ceil(power/10),"A training robot",2,power,hp,hp,currentsword,false,"training");
@@ -1084,7 +1083,7 @@ function chooseskill(type) {
 }
 function upgradeskill() {
 	if(skill=="thunder") {
-		makealert("upgrade-skill","Upgrade Skill","Your skill is: Thunder Bolt<br>Skill level: <span class=\"skilllvl\">"+skilllvl+"</span> (<span class=\"thunder-damage\">"+(20+skilllvl*5)+"</span> damage)<br><br><input type=\"button\" value=\"Upgrade this skill\" onclick=\"doupgrade()\"> (<span class=\"upgrade-price\">"+(skilllvl*skilllvl*500+500)+"</span> gold bars)",true);
+		makealert("upgrade-skill","Upgrade Skill","Your skill is: Thunder Bolt<br>Skill level: <span class=\"skilllvl\">"+skilllvl+"</span> (<span class=\"thunder-damage\">"+(20+skilllvl*7)+"</span> damage)<br><br><input type=\"button\" value=\"Upgrade this skill\" onclick=\"doupgrade()\"> (<span class=\"upgrade-price\">"+(skilllvl*skilllvl*500+500)+"</span> gold bars)",true);
 	}
 	else {
 		makealert("upgrade-skill","Upgrade Skill","Your skill is: Invulnerability<br>Skill level: <span class=\"skilllvl\">"+skilllvl+"</span> (<span class=\"invuln-time\">"+(3+(skilllvl*3))+"</span> second(s))<br><br><input type=\"button\" value=\"Upgrade this skill\" onclick=\"doupgrade()\"> (<span class=\"upgrade-price\">"+(skilllvl*skilllvl*500+500)+"</span> gold bars)",true);
@@ -1153,7 +1152,7 @@ function castlegotohall(myfinalhp) {
 }
 function castlegotoking(myfinalhp) {
 	powerhp();
-	battle=makebattle(Math.round(Math.random()*100),"Zombie King",750,750,"Diamond Sword",50,"I AM THE BOSS!!",0,power,myfinalhp,hp,currentsword,false,"vs-castle-boss");
+	battle=makebattle(Math.round(Math.random()*100),"Zombie King",650,650,"Diamond Sword",50,"I AM THE BOSS!!",0,power,myfinalhp,hp,currentsword,false,"vs-castle-boss");
 	html="<div class=\"alert alert-castle-king\"><b>Castle</b><br>You are in front of the king! :o<br><br><div class=\"castle-steps\"><span class=\"castle-entrance\">Castle Entrance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-hall\">Castle Hall</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-room\">King's Room</span></div><br><br>"+battle.html+"</div>";
 	$("#otheralerts").append(html);
 	$(".castle-entrance").addClass("grey");
@@ -1254,9 +1253,9 @@ function showstorage() {
 	$(".alert-storage").fadeIn("fast");
 	$(".modal").fadeIn("fast");
 }
-function changelog() {
+function gam() {
 	closemessage();
-	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>04 January 2014<br>-Fixed bug in the old machine <br><br>03 January 2014<br>- Version 1.0 released! (finally :D)<br>- There is something new in the end of 'the digging'<br><br>24 December 2013:<br>- Airplane price is now 5 million iron bars instead of 9 million! <br><br>20 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1tbmnk/20_dec_2013_update_version_094_beta/' target='_blank'>Updates</a><br><br>18 December 2013:<br>- Some fixes thanks to <a href='https://github.com/Stevie-O' target='_blank'>Stevie-O</a><br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1t5g6i/18_dec_2013_update_093_beta/' target='_blank'>Updates</a><br><br>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
+	makealert("changelog","Changelog","<div style='max-height:300px; overflow-y:auto;'>12 January 2014<br>- Iron mining machine price is a bit cheaper<br>- Reset game button added<br>- A super minor change (you don't need to know about this, actually)<br>- Zombie king is a bit easier to kill<br>- Each level of thunder skill now gives 7 more attack instead of 5<br><br>04 January 2014<br>-Fixed bug in the old machine <br><br>03 January 2014<br>- Version 1.0 released! (finally :D)<br>- There is something new in the end of 'the digging'<br><br>24 December 2013:<br>- Airplane price is now 5 million iron bars instead of 9 million! <br><br>20 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1tbmnk/20_dec_2013_update_version_094_beta/' target='_blank'>Updates</a><br><br>18 December 2013:<br>- Some fixes thanks to <a href='https://github.com/Stevie-O' target='_blank'>Stevie-O</a><br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1t5g6i/18_dec_2013_update_093_beta/' target='_blank'>Updates</a><br><br>14 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1sv65j/updates_2/' target='_blank'>Bug fixes & Updates</a><br><br>13 December 2013:<br>- <a href='http://www.reddit.com/r/thegoldfactory/comments/1ss7u8/updates/' target='_blank'>Lots of updates</a><br><br>11 December 2013:<br>- Version 1.0 Beta released!<br>- Bug fix</div>",true);
 }
 function armorshop() {
 	closemessage();
@@ -1808,7 +1807,7 @@ function localstoragehelp() {
 }
 
 function save() {
-	makealert("save","Save game","Here you can save your progress (Since i'm not sure if the saving works well or not, so I recommend you to save the game as text too, in case there are some errors)<br><br><input type='button' value='Save game' onclick='dosave(\"localstorage\")'> (Uses HTML5 Local Storage <small>[<a href='javascript:localstoragehelp();' title='What is HTML5 Local Storage???'>?</a>]</small>)<br><input type='button' value='Save game as text' onclick='dosave(\"text\")'><br><input type='button' value='Load game' onclick='dosave(\"load\")'>",true);
+	makealert("save","Save game","Here you can save your progress (Since i'm not sure if the saving works well or not, so I recommend you to save the game as text too, in case there are some errors)<br><br><input type='button' value='Save game' onclick='dosave(\"localstorage\")'> (Uses HTML5 Local Storage <small>[<a href='javascript:localstoragehelp();' title='What is HTML5 Local Storage???'>?</a>]</small>)<br><input type='button' value='Save game as text' onclick='dosave(\"text\")'><br><input type='button' value='Load game' onclick='dosave(\"load\")'><br><input type='button' value='Reset game' onclick='dosave(\"reset\")'>",true);
 }
 
 function dosave(param) {
@@ -1999,6 +1998,23 @@ function dosave(param) {
 		
 		localStorage.thegoldfactorygamesave=goldbar+"|"+ironbar+"|"+gbps+"|"+goldmining+"|"+ibpt+"|"+ibtime+"|"+ironmining+"|"+items[0].owned+"|"+items[1].owned+"|"+items[2].owned+"|"+items[3].owned+"|"+items[4].owned+"|"+items[5].owned+"|"+items[6].owned+"|"+items[7].owned+"|"+items[8].owned+"|"+items[9].owned+"|"+items[10].owned+"|"+items[11].owned+"|"+items[12].owned+"|"+items[13].owned+"|"+items[14].owned+"|"+items[15].owned+"|"+items[16].owned+"|"+items[17].owned+"|"+items[18].owned+"|"+items[19].owned+"|"+items[20].owned+"|"+items[21].owned+"|"+items[22].owned+"|"+items[23].owned+"|"+items[24].owned+"|"+enchant_attack+"|"+enchant_defense+"|"+enchant_countdown+"|"+enchant_life+"|"+helmet+"|"+chestplate+"|"+pants+"|"+boots+"|"+theusername+"|"+theuserdesc+"|"+cheststep+"|"+searchtimes+"|"+shovelbroken+"|"+cursor+"|"+pizzaeaten+"|"+poisoned+"|"+chestunderground+"|"+talk+"|"+wob+"|"+buyfactory+"|"+skill+"|"+skilllvl+"|"+additionalattack+"|"+clickcloudcount+"|"+openchestcount+"|"+candybox+"|"+hpactive+"|"+airplanecountdown+"|"+digcountdown+"|"+digstep+"|"+currentsword+"|"+passthief+"|"+passworms+"|"+passgate+"|"+unlockenchant+"|"+unlockchest+"|"+beatboss+"|"+hasairplane+"|"+reachedclouds+"|"+defeatinvisiblebot+"|"+gethole+"|"+win+"|"+hasportal+"|"+cipherstep+"|"+activatemachine;
 		alert('Your game has been saved!');
+	}
+	else if(param=="reset") {	
+		a=confirm("Are you sure you want to reset your game?");
+		if(a) {
+			b=confirm("Are you sure?");
+			if(b) {
+				c=confirm("Ok, the last confirmation, are you sure? Remember, this can't be undone");
+				if(c) {
+				
+					localStorage.thegoldfactorygamesave="0|0|1|0|0|3600|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|You|This is you.|0|0|0|0|false|false|false|0|false|false|none|0|0|0|0|false|0|999999999|999999999|0|none|false|false|false|false|false|false|false|false|false|false|false|false";
+					checkthings();
+					
+					alert('Localstorage cleared, please refresh the page for\nchanges to apply (don\'t save before refreshing!)');
+					
+				}
+			}
+		}
 	}
 }
 
@@ -2435,7 +2451,7 @@ function usetheskill(id) {
 		if(enchant_countdown==1) { mindelay=18; } else { mindelay=20; }
 		if(skill=="thunder") {
 			enemyhp=enemyhealthpoint(false,0);
-			enemyhp-=20+skilllvl*5;
+			enemyhp-=20+skilllvl*7;
 			enemyhealthpoint(true,enemyhp);
 			if(enemyhealthpoint(false,0)<=0) {
 				enemyhealthpoint(true,0);
@@ -3099,3 +3115,4 @@ function checkchipher() {
 		}
 	}
 }
+1.
