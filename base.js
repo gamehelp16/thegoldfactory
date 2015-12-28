@@ -3072,7 +3072,7 @@ function ciphercode() {
 		codetocipher="VGhlIHBsYW50IGlzIGZhbW91cyBiZWNhdXNlIG9mIHR<br>oZSBhYmlsaXR5IHRvIGN1cmUgc29tZSBkaXNlYXNlcw==";
 	}
 	else if(cipherstep==4) {
-		codetocipher="towiiag g se   rir,oaoan   ft ofo srtod tddyi ot mdy lugelelmwon foemsthiuaa ttclntclga  bhhs";
+		codetocipher="towiiag g se&nbsp;&nbsp;&nbsp;rir,oaoan&nbsp;&nbsp;&nbsp;ft ofo srtod tddyi ot mdy lugelelmwon foemsthiuaa ttclntclga&nbsp;&nbsp;bhhs (apparently for around 2 years there was a mistake in the code, it has been fixed, sorry)";
 	}
 
 	if(cipherstep<5) {
