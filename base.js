@@ -589,7 +589,7 @@ $(document).ready(function() {
 		}
 		else if(passgate&&buyfactory) {
 			closemessage();
-			makealert("buy-factory-new","The Gold Factory","Status: You are the boss! :o<br><br>Currently you have <span class=\"gold-mining\">"+goldmining+"</span> mining machines<br>Production: <span class=\"gbps\">"+gbps+"</span> goldbars / second<br><br><input type=\"button\" value=\"Buy 1 mining machine\" onclick=\"buyminingmachinegold(1)\" class=\"buy-1-mining-gold\"> (<span class=\"1-gold-cost\">"+goldprice+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 10 mining machines\" onclick=\"buyminingmachinegold(10)\" class=\"buy-10-mining-gold\"> (<span class=\"10-gold-cost\">"+goldprice*10+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 100 mining machines\" onclick=\"buyminingmachinegold(100)\" class=\"buy-100-mining-gold\"> (<span class=\"100-gold-cost\">"+goldprice*100+"</span> Iron Bars)<br><br>Tips: Buying 100 machines once is cheaper than buying 1 machine 100 times",true)
+			makealert("buy-factory-new","The Gold Factory","Status: You are the boss! :o<br>Your old boss left his book of ciphers on your desk, he'll pay you if you continue to solve them!<input type='button' value='Help him ciphering codes' onclick='ciphercode()'><br><br>Currently you have <span class=\"gold-mining\">"+goldmining+"</span> mining machines<br>Production: <span class=\"gbps\">"+gbps+"</span> goldbars / second<br><br><input type=\"button\" value=\"Buy 1 mining machine\" onclick=\"buyminingmachinegold(1)\" class=\"buy-1-mining-gold\"> (<span class=\"1-gold-cost\">"+goldprice+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 10 mining machines\" onclick=\"buyminingmachinegold(10)\" class=\"buy-10-mining-gold\"> (<span class=\"10-gold-cost\">"+goldprice*10+"</span> Iron Bars)<br><input type=\"button\" value=\"Buy 100 mining machines\" onclick=\"buyminingmachinegold(100)\" class=\"buy-100-mining-gold\"> (<span class=\"100-gold-cost\">"+goldprice*100+"</span> Iron Bars)<br><br>Tips: Buying 100 machines once is cheaper than buying 1 machine 100 times",true)
 		}
 	});
 	$(".theshop").click(function() {
@@ -1165,7 +1165,7 @@ function castlegotohall(myfinalhp) {
 }
 function castlegotoking(myfinalhp) {
 	powerhp();
-	battle=makebattle(Math.round(Math.random()*100),"Zombie King",650,650,"Diamond Sword",50,"I AM THE BOSS!!",0,power,myfinalhp,hp,currentsword,false,"vs-castle-boss");
+	battle=makebattle(Math.round(Math.random()*100),"Zombie King",500,500,"Diamond Sword",40,"I AM THE BOSS!!",0,power,myfinalhp,hp,currentsword,false,"vs-castle-boss");
 	html="<div class=\"alert alert-castle-king\"><b>Castle</b><br>You are in front of the king! :o<br><br><div class=\"castle-steps\"><span class=\"castle-entrance\">Castle Entrance</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-hall\">Castle Hall</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"castle-room\">King's Room</span></div><br><br>"+battle.html+"</div>";
 	$("#otheralerts").append(html);
 	$(".castle-entrance").addClass("grey");
@@ -3063,19 +3063,36 @@ function ciphercode() {
 		codetocipher="13-1-19-20-5-18 2-18-1-14-3-8";
 	}
 	else if(cipherstep==1) {
-		codetocipher="Lzwjw ak s ljwskmjw zavvwf kgewozwjw, al ak dguslwv sl s kwujwl hdsuw af lzw Hsuaxau Guwsf";
+		codetocipher="97 114 101 32 121 111 117 32 112 114 101 112 97 114 101 100 32 102 111 114 32 116 104 101 32 111 116 104 101 114 32 99 105 112 104 101 114 115 63";
 	}
 	else if(cipherstep==2) {
-		codetocipher="Om s ept;f gi;; pg n;pvld";
+		codetocipher="Lzwjw ak s ljwskmjw zavvwf kgewozwjw, al ak dguslwv sl s kwujwl hdsuw af lzw Hsuaxau Guwsf";
 	}
 	else if(cipherstep==3) {
-		codetocipher="VGhlIHBsYW50IGlzIGZhbW91cyBiZWNhdXNlIG9mIHR<br>oZSBhYmlsaXR5IHRvIGN1cmUgc29tZSBkaXNlYXNlcw==";
+		codetocipher="Om s ept;f gi;; pg n;pvld";
 	}
 	else if(cipherstep==4) {
-		codetocipher="towiiag g se&nbsp;&nbsp;&nbsp;rir,oaoan&nbsp;&nbsp;&nbsp;ft ofo srtod tddyi ot mdy lugelelmwon foemsthiuaa ttclntclga&nbsp;&nbsp;bhhs (apparently for around 2 years there was a mistake in the code, it has been fixed, sorry)";
+		codetocipher="VGhlIHBsYW50IGlzIGZhbW91cyBiZWNhdXNlIG9mIHR<br>oZSBhYmlsaXR5IHRvIGN1cmUgc29tZSBkaXNlYXNlcw==";
 	}
-
-	if(cipherstep<5) {
+	else if(cipherstep==5) {
+		codetocipher="70 69 6e 65 61 70 70 6c 65 20 70 69 7a 7a 61 20 69 73 20 6f 62 6a 65 63 74 69 76 65 6c 79 20 62 61 64";
+	}
+	else if(cipherstep==6) {
+		codetocipher="666677733076668444666667777";
+	}
+	else if(cipherstep==7) {
+		codetocipher="- .... .. -. --. ... / .- .-. . / .- -... --- ..- - / - --- / --. . - / .-- --- .-. ... .";
+	}
+	else if(cipherstep==8) {
+		codetocipher="To be gold is to be good, To be stone is to be nothing, To be glass is to be fragile, To be cold is to be cruel. What am I?";
+	}
+	else if(cipherstep==9) {
+		codetocipher="t t o hfwti ioufioa asargt o dt gttd dcysil eont  tm dcy  llruggiealre l,m woobna hfooheamssn";
+	}
+	else if(cipherstep==10) {
+		codetocipher="rr ry rv ee yd r5 rq uo yv rz te yi ty tr eo yi r3 ew ri ur up ew te ye rc tq yw ur ri ew ut eq uq tp rv eq up tp rv ut yv uz rr ur yv tr ro ep ty tr eq uo ty tt rq yy rc rz ro yz ty rr ec ec";
+	}
+	if(cipherstep<11) {
 		makealert("help-ciphering","Cipher some codes","Your boss loves ciphering codes, but he is busy. If you can help him, he promise to give you bonus gold bars as a reward.<br><br>Code #"+(cipherstep+1)+":<br>"+codetocipher+"<br><input type='text' id='cipherthecodeanswer'><br><br><input type='button' value='Submit' onclick='checkchipher()'>",true);
 	}
 	else {
@@ -3111,10 +3128,21 @@ function checkchipher() {
 			alert("Correct! But since this is an easy one, you 'only' get 200 gold bars"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: ABC, Its easy as 123!');
 		}
 	}
 	else if(cipherstep==1) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="are you prepared for the other ciphers?") {
+			cipherstep++;
+			goldbar+=500;
+			closemessage();
+			alert("Correct! You get 500 gold bars!"); 
+		}
+		else {
+			alert('Wrong! Hint: A tenth of a number is still only this.');
+		}
+	}
+	else if(cipherstep==2) {
 		if($("#cipherthecodeanswer").val().toLowerCase()=="there is a treasure hidden somewhere, it is located at a secret place in the pacific ocean") {
 			cipherstep++;
 			goldbar+=1000;
@@ -3122,32 +3150,77 @@ function checkchipher() {
 			alert("Correct! You get 1000 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: The Romans would be furious with you.');
 		}
 	}
-	else if(cipherstep==2) {
+	else if(cipherstep==3) {
 		if($("#cipherthecodeanswer").val().toLowerCase()=="in a world full of blocks") {
+			cipherstep++;
+			goldbar+=1500;
+			closemessage();
+			alert("Correct! You get 1500 gold bars!"); 
+		}
+		else {
+			alert('Wrong! Hint: Its what your typing with right now!');
+		}
+	}
+	else if(cipherstep==4) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="the plant is famous because of the ability to cure some diseases") {
 			cipherstep++;
 			goldbar+=2000;
 			closemessage();
 			alert("Correct! You get 2000 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: (8*4) - 16 + ((24/2) *4)');
 		}
 	}
-	else if(cipherstep==3) {
-		if($("#cipherthecodeanswer").val().toLowerCase()=="the plant is famous because of the ability to cure some diseases") {
+	else if(cipherstep==5) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="pineapple pizza is objectively bad") {
 			cipherstep++;
-			goldbar+=2500;
+			goldbar+=3500;
 			closemessage();
-			alert("Correct! You get 2500 gold bars!"); 
+			alert("Correct! You get 3500 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: A witches curse with a tenth of a number.');
 		}
 	}
-	else if(cipherstep==4) {
+	else if(cipherstep==6) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="MORE POTIONS") {
+			cipherstep++;
+			items[7].owned+=5;
+			closemessage();
+			alert("Correct! You get 5 health potions!"); 
+		}
+		else {
+			alert('Wrong! Hint: Half of a dodecagon and a tenth of a number.');
+		}
+	}
+	else if(cipherstep==7) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="things are about to get worse") {
+			cipherstep++;
+			ironbar+=20;
+			closemessage();
+			alert("Correct! You get 20 iron bars!"); 
+		}
+		else {
+			alert('Wrong! Hint: Heard mainly by those that can not see it');
+		}
+	}
+	else if(cipherstep==8) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="the heart") {
+			cipherstep++;
+			items[7].owned+=10;
+			goldbar+=5000;
+			closemessage();
+			alert("Correct! You get 10 health potions and 5000 gold bars!"); 
+		}
+		else {
+			alert('Wrong! Hint: Ba dum, ba dum, ba dum.');
+		}
+	}
+	else if(cipherstep==9) {
 		if($("#cipherthecodeanswer").val().toLowerCase()=="the gold factory was built long time ago, and it is the most famous gold factory in the world") {
 			cipherstep++;
 			goldbar+=7500;
@@ -3155,7 +3228,20 @@ function checkchipher() {
 			alert("Correct! Because this one is a hard one, you get 7500 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: Feel on the rails and on the fence? Combine em and keep going!');
+		}
+	}
+	else if(cipherstep==10) {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="A wiseman once said: Shut up and let me sleep") {
+			cipherstep++;
+			goldbar+=10000;
+			ironbar+=100;
+			items[7].owned+=10;
+			closemessage();
+			alert("Correct! Your so good at these! You get 100 iron bars, 10 health potions and 10k gold!"); 
+		}
+		else {
+			alert('Wrong! Hint: You will have to use a bunch ciphers in conjunction to crack this one! They are all ones used before.');
 		}
 	}
 }
