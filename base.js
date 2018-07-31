@@ -3187,14 +3187,14 @@ function checkchipher() {
 		}
 	}
 	else if(cipherstep==6) {
-		if($("#cipherthecodeanswer").val().toLowerCase()=="MORE POTIONS") {
+		if($("#cipherthecodeanswer").val().toLowerCase()=="MOREPOTIONS") {
 			cipherstep++;
 			items[7].owned+=5;
 			closemessage();
 			alert("Correct! You get 5 health potions!"); 
 		}
 		else {
-			alert('Wrong! Hint: Half of a dodecagon and a tenth of a number.');
+			alert('Wrong! Hint: You had to do this manually before they became smart.');
 		}
 	}
 	else if(cipherstep==7) {
