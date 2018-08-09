@@ -3111,7 +3111,7 @@ function checkchipher() {
 			alert("Correct! But since this is an easy one, you 'only' get 200 gold bars"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: ABC, Its easy as 123!');
 		}
 	}
 	else if(cipherstep==1) {
@@ -3122,7 +3122,7 @@ function checkchipher() {
 			alert("Correct! You get 1000 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: The Romans would be furious with you.');
 		}
 	}
 	else if(cipherstep==2) {
@@ -3133,56 +3133,18 @@ function checkchipher() {
 			alert("Correct! You get 2000 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: You use this to type with!');
 		}
 	}
-<<<<<<< HEAD
-	else if(cipherstep==5) {
-		if($("#cipherthecodeanswer").val().toLowerCase()=="pineapple pizza is objectively bad") {
-			cipherstep++;
-			goldbar+=3500;
-			closemessage();
-			alert("Correct! You get 3500 gold bars!"); 
-		}
-		else {
-			alert('Wrong! Hint: A witches curse with a tenth of a number.');
-		}
-	}
-	else if(cipherstep==6) {
-		if($("#cipherthecodeanswer").val().toLowerCase()=="MOREPOTIONS") {
-			cipherstep++;
-			items[7].owned+=5;
-			closemessage();
-			alert("Correct! You get 5 health potions!"); 
-		}
-		else {
-			alert('Wrong! Hint: You had to do this manually before they became smart.');
-		}
-	}
-	else if(cipherstep==7) {
-		if($("#cipherthecodeanswer").val().toLowerCase()=="things are about to get worse") {
-			cipherstep++;
-			ironbar+=20;
-			closemessage();
-			alert("Correct! You get 20 iron bars!"); 
-		}
-		else {
-			alert('Wrong! Hint: Heard mainly by those that can not see it');
-		}
-	}
-	else if(cipherstep==8) {
-		if($("#cipherthecodeanswer").val().toLowerCase()=="the heart") {
-=======
 	else if(cipherstep==3) {
 		if($("#cipherthecodeanswer").val().toLowerCase()=="the plant is famous because of the ability to cure some diseases") {
->>>>>>> parent of 9714380... Added Ciphers
 			cipherstep++;
 			goldbar+=2500;
 			closemessage();
 			alert("Correct! You get 2500 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: (8*4) - 16 + ((24/2) *4)');
 		}
 	}
 	else if(cipherstep==4) {
@@ -3193,7 +3155,7 @@ function checkchipher() {
 			alert("Correct! Because this one is a hard one, you get 7500 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: Feel on the rails and on the fence? Combine em and keep going!');
 		}
 	}
 }
