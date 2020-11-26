@@ -3111,7 +3111,7 @@ function checkchipher() {
 			alert("Correct! But since this is an easy one, you 'only' get 200 gold bars"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: ABC, Its easy as 123!');
 		}
 	}
 	else if(cipherstep==1) {
@@ -3122,7 +3122,7 @@ function checkchipher() {
 			alert("Correct! You get 1000 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: The Romans would be furious with you.');
 		}
 	}
 	else if(cipherstep==2) {
@@ -3133,7 +3133,7 @@ function checkchipher() {
 			alert("Correct! You get 2000 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: You use this to type with!');
 		}
 	}
 	else if(cipherstep==3) {
@@ -3144,7 +3144,7 @@ function checkchipher() {
 			alert("Correct! You get 2500 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: (8*4) - 16 + ((24/2) *4)');
 		}
 	}
 	else if(cipherstep==4) {
@@ -3155,7 +3155,7 @@ function checkchipher() {
 			alert("Correct! Because this one is a hard one, you get 7500 gold bars!"); 
 		}
 		else {
-			alert('Wrong!');
+			alert('Wrong! Hint: Feel on the rails and on the fence? Combine em and keep going!');
 		}
 	}
 }
