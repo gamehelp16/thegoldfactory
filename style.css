@@ -505,6 +505,10 @@ table {
 
 /* End normalizer */
 
+@font-face {
+  font-family: DejaVuSansMono;
+  src: url(DejaVuSansMono.ttf);
+}
 body {
 	font-family:"Times New Roman";
 	font-size:16px;
@@ -522,12 +526,14 @@ body.wob a {
 }
 pre {
 	font-size:13px;
+	font-family:DejaVuSansMono;
 }
 .alert {
 	position:fixed;
 	z-index:9999999;
 	top:100px;
-	left:250px;
+	left:50%;
+	transform: translateX(-50%);
 	border:1px solid black;
 	padding:20px;
 	background:white;
@@ -539,11 +545,10 @@ pre {
 	z-index:9999998;
 	top:0;
 	left:0;
-	background:transparent;
 	display:none;
 	width:100%;
 	height:100%;
-	background:rgba(0,0,0,.0);
+	background:rgba(0,0,0,0);
 }
 .fader {
 	position:fixed;
@@ -605,13 +610,12 @@ pre.enchant {
 pre.hill {
 	position:absolute;
 	left:700px;
-	width:700px;
 	cursor:default;
 }
 pre.chest {
 	position:absolute;
 	left:750px;
-	top:80px;
+	top:75px;
 }
 pre.castle {
 	position:absolute;
@@ -626,6 +630,7 @@ pre.laboratory {
 pre.portal {
 	position:absolute;
 	left:1600px;
+	width:64px;
 }
 pre.airplane {
 	position:absolute;
@@ -643,11 +648,14 @@ pre.none {
 	clear:both;
 	position:relative;
 	z-index:1;
-	top:-34px;
+	top:-32px;
 	color:transparent;
 	border-bottom:1px solid black;
 	min-width:2000px;
 	width:100%;
+}
+#realworld .road {
+	top:-34px;
 }
 body.wob .road {
 	border-bottom:1px solid white;
@@ -690,6 +698,21 @@ body.wob input[type=button]:hover {
 	background:rgba(255,255,255,.3);
 	border:1px solid white;
 }
+.banner-plane {
+	position:absolute;
+	width: 1500px;
+	top:0px;
+	left:220px;
+}
+.banner-plane.world1.reachedclouds {
+	top:500px;
+}
+.ads {
+	position:absolute;
+	top:37px;
+	left:71px;
+	z-index:9999;
+}
 .cloud {
 	position:absolute;
 }
@@ -699,11 +722,13 @@ body.wob input[type=button]:hover {
 }
 .cloud-2 {
 	top:-100px;
-	left:850px;
+	left:1750px;
+	width:200px;
 }
 .cloud-3 {
 	top:-100px;
-	left:250px;
+	left:1550px;
+	width:200px;
 }
 .cloud-4 {
 	top:-600px;
@@ -744,9 +769,9 @@ pre.dig-step-1 {
 	left:270px;
 }
 pre.dig-step-2 {
-	margin-top:-4px;
+	margin-top:-6px;
 	cursor:default;
-	left:14px;
+	left:19.5px;
 	z-index:1000;
 }
 pre.underworld-building {
@@ -756,20 +781,20 @@ pre.training-center {
 	position:absolute;
 	z-index:1001;
 	left:320px;
-	margin-top:172px;
+	margin-top:159px;
 }
 pre.mining {
 	position:absolute;
 	z-index:1001;
 	left:70px;
-	margin-top:295px;
+	margin-top:277px;
 	background:white;
 }
 pre.small-hole {
 	position:absolute;
 	z-index:1001;
-	left:483px;
-	margin-top:93px;
+	left:481px;
+	margin-top:69px;
 	background:white;
 	width:50px;
 }
@@ -777,36 +802,36 @@ pre.digging {
 	position:absolute;
 	background:white;
 	z-index:1001;
-	left:489px;
-	margin-top:75px;
+	left:482px;
+	margin-top:54px;
 }
 pre.dig-get-chest {
 	position:absolute;
 	background:white;
 	z-index:1001;
 	left:700px;
-	margin-top:75px;
+	margin-top:54px;
 }
 pre.dig-pizzas {
 	position:absolute;
 	background:white;
 	z-index:1001;
 	left:900px;
-	margin-top:75px;
+	margin-top:54px;
 }
 pre.dig-laptop {
 	position:absolute;
 	background:white;
 	z-index:1001;
-	left:1200px;
-	margin-top:75px;
+	left:1150px;
+	margin-top:54px;
 }
 pre.dig-sign {
 	position:absolute;
 	background:white;
 	z-index:1001;
 	left:1400px;
-	margin-top:75px;
+	margin-top:54px;
 }
 body.wob pre.mining, body.wob pre.small-hole, body.wob pre.digging, body.wob pre.dig-get-chest, body.wob pre.dig-pizzas, body.wob pre.dig-laptop, body.wob pre.dig-sign {
 	background:black;
@@ -848,6 +873,9 @@ body.wob #credits {
 	font-weight:bold;
 	color:red;
 	text-decoration:none;
+}
+.dec2021msg {
+	font-weight:bold;
 }
 [class^=player-] {
 	z-index:10;
@@ -892,7 +920,7 @@ body.wob pre [type=button] {
 .theportal {
 	position:absolute;
 	left:75px;
-	top:200px;
+	margin-top: 6px;
 	cursor:pointer;
 	background:white;
 	z-index:99999;
@@ -900,6 +928,7 @@ body.wob pre [type=button] {
 .thefox {
 	position:absolute;
 	left:250px;
+	margin-top: 6px;
 	cursor:pointer;
 	background:white;
 	z-index:9999;
@@ -907,6 +936,7 @@ body.wob pre [type=button] {
 .thehouse {
 	position:absolute;
 	left:550px;
+	margin-top: 6px;
 	cursor:pointer;
 	background:white;
 	z-index:9999;
@@ -914,6 +944,7 @@ body.wob pre [type=button] {
 .sand {
 	position:absolute;
 	left:850px;
+	margin-top: 6px;
 	width:810px;
 	cursor:pointer;
 	background:white;
@@ -923,7 +954,7 @@ body.wob pre [type=button] {
 	position:absolute;
 	left:1050px;
 	width:120px;
-	top:265px;
+	top:233px;
 	background:white;
 	z-index:10000;
 }
@@ -959,4 +990,57 @@ body.wob [class^=buttons-] input[type=button]:disabled {
 }
 img {
 	opacity:0;
+}
+.bubble {
+	position: fixed;
+	right: 230px;
+	bottom: 50px;
+	z-index: 9999997;
+	background: #ffffff;
+	text-align: center;
+	border-radius: 10px;
+	padding: 10px;
+	border: #000000 solid 1px;
+	animation: mover .75s infinite alternate linear;
+}
+.bubble:after {
+	content: '';
+	position: absolute;
+	display: block;
+	width: 0;
+	z-index: 1;
+	border-style: solid;
+	border-color: #ffffff transparent;
+	border-width: 10px 10px 0;
+	bottom: -10px;
+	left: 50%;
+	margin-left: -10px;
+}
+.bubble:before {
+	content: '';
+	position: absolute;
+	width: 0;
+	z-index: 0;
+	border-style: solid;
+	border-color: #000000 transparent;
+	border-width: 11px 11px 0;
+	bottom: -11.5px;
+	left: 50%;
+	margin-left: -11px;
+	display: block;
+}
+body.wob .bubble {
+	background: black;
+	color: white;
+	border: #ffffff solid 1px;
+}
+body.wob .bubble:after {
+	border-color: #000000 transparent;
+}
+body.wob .bubble:before {
+	border-color: #ffffff transparent;
+}
+@keyframes mover {
+	0% { transform: translateY(0); }
+	100% { transform: translateY(5px); }
 }
